@@ -1,4 +1,3 @@
-import json
 import re
 from datetime import datetime
 
@@ -50,7 +49,7 @@ class Bulletin:
         self.sumario = self._get_sumario()
         self.articles = []
 
-    def _get_boletin(self):
+    def _get_bulletin(self):
         """
         Fetches the HTML content of the bulletin from the specified URL.
 
@@ -68,8 +67,7 @@ class Bulletin:
         day = self.date.strftime("%d")
         month = self.date.strftime("%m")
         year = self.date.strftime("%Y")
-        url = f"https://miprincipado.asturias.es/bopa-sumario?p_r_p_summaryDate={
-            day}%2F{month}%2F{year}"
+        url = f"https://miprincipado.asturias.es/bopa-sumario?p_r_p_summaryDate={day}%2F{month}%2F{year}"
 
         response = requests.get(url, timeout=60)
         html_content = response.content
@@ -99,7 +97,7 @@ class Bulletin:
             A dictionary containing the structured content of the bulletin.
         """
 
-        boletin_div = self._get_boletin()
+        boletin_div = self._get_bulletin()
 
         headers_dict = {}
 

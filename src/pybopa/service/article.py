@@ -16,10 +16,10 @@ class Article:
         The bulletin number.
     date : datetime
         The bulletin date.
-    origin: str
-        The source of the article (e.g., "SESPA").
+    origin : str or None
+        The full origin path concatenating h4/h5/h6/author with "/" (e.g. "I. Principado de Asturias/AUTORIDADES Y PERSONAL/CONSEJERÍA DE SALUD/SERVICIO DE SALUD DEL PRINCIPADO DE ASTURIAS (SESPA)").
     content : list
-        The parsed content of the article.
+        The parsed content of the article (without origin headers).
     link_html : str
         The URL to the HTML version of the article.
     link_pdf : str
@@ -44,6 +44,7 @@ class Article:
         self.date = date
         self._link_html = self._build_link_html()
         self._link_pdf = self._build_link_pdf()
+        self.origin = None
         self.content = self._get_article()
 
     def _build_link_html(self):
@@ -73,11 +74,12 @@ class Article:
     def _get_article(self):
         """
         Fetches and parses the article content from the specified URL.
+        Extracts origin headers (h4, h5, h6, subAuthor) from the content.
 
         Returns
         -------
         list
-            A list with the article content.
+            A list with the article text content (without origin headers).
         """
 
         url = self._link_html
@@ -87,16 +89,29 @@ class Article:
 
         soup = BeautifulSoup(html_content, "html.parser")
 
-        disposition_div = soup.find("div", {"id": "bopa-articulo"})
+        article_div = soup.find("div", {"id": "bopa-articulo"})
 
         text_list = []
 
-        for element in disposition_div.find_all():
-            text_list.append(element.get_text(separator=' '))
+        origin_parts = []
+
+        for element in article_div.children:
+            if element.name == 'h4':
+                origin_parts.append(element.get_text().strip())
+            elif element.name == 'h5':
+                origin_parts.append(element.get_text().strip())
+            elif element.name == 'h6':
+                origin_parts.append(element.get_text().strip())
+            elif element.name == 'p' and 'subAuthor' in element.get('class', []):
+                origin_parts.append(element.get_text().strip())
+            else:
+                text_list.append(element.get_text(separator=' '))
+
+        self.origin = "/".join(origin_parts) if origin_parts else None
 
         text_list = [text for text in text_list if text.strip()]
 
-        return (text_list)
+        return text_list
 
     def _extract_num_and_date(self, text):
         """
@@ -164,6 +179,7 @@ class Article:
             "num": self.num,
             "date": formatted_date,
             "cod": self.cod,
+            "origin": self.origin,
             "link_html": self._link_html,
             "link_pdf": self._link_pdf,
             "content": self.content
