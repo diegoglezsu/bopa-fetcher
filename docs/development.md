@@ -1,0 +1,58 @@
+# Development
+
+This page describes the local workflow for contributing to pybopa.
+
+## Local Setup
+
+Install development and documentation dependencies.
+
+```bash
+pip install -e .[dev,docs]
+```
+
+## Run Tests 🧪
+
+Run all tests:
+
+```bash
+pytest
+```
+
+Generate coverage XML report:
+
+```bash
+pytest --cov --cov-branch --cov-report=xml
+```
+
+## Build Docs 📚
+
+Build static docs:
+
+```bash
+mkdocs build
+```
+
+Serve docs locally:
+
+```bash
+mkdocs serve
+```
+
+## Reporting Issues 🐞
+
+If you encounter any issues, please report them on the [GitHub Issues page](https://github.com/diegoglezsu/pybopa/issues). When reporting an issue, please include:
+
+- A clear and descriptive title.
+- A detailed description of the problem.
+- Steps to reproduce the issue.
+- Any relevant screenshots or error messages.
+
+## Contributing 🚀
+
+Contributions are welcome! Please follow the standard steps:
+
+1. Fork the project.
+2. Create a branch for your feature (`git checkout -b feature/<feature-name>`).
+3. Commit your changes (`git commit -m 'feat: added <feature-name>'`).
+4. Push to the branch (`git push origin feature/<feature-name>`).
+5. Open a pull request describing your changes and the problem they solve.

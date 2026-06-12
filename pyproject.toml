@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pybopa"
+version = "0.1.0"
+description = "A Python package for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)."
+readme = "README.md"
+requires-python = ">=3.7"
+license-files = ["LICENSE"]
+authors = [
+  {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
+  {name = "Noelia Rico", email = "noeliarico@uniovi.es"}
+]
+maintainers = [
+  {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
+  {name = "Noelia Rico", email = "noeliarico@uniovi.es"}
+]
+keywords = ["official gazette", "asturian legislation", "data analysis", "policy research", "legal analytics"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Legal Industry",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Text Processing :: General",
+]
+license = "MIT"
+dependencies = [
+  "bs4==0.0.2",
+  "matplotlib==3.9.0",
+  "numpy==1.26.4",
+  "pandas==2.2.2",
+  "requests==2.31.0",
+  "seaborn==0.13.2"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.9",
+    "mypy>=0.900",
+]
+docs = [
+    "mkdocs>=1.6,<2.0",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+]
+
+[project.urls]
+Homepage = "https://diegoglezsu.github.io/pybopa"
+Documentation = "https://diegoglezsu.github.io/pybopa"
+Repository = "https://github.com/diegoglezsu/pybopa.git"
+Issues = "https://github.com/diegoglezsu/pybopa/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py37"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
