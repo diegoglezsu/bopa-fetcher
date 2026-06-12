@@ -17,7 +17,7 @@ def main() -> int:
     print(f"  sumario keys: {list(boletin.sumario.keys())}")
     print(f"  disposiciones count: {len(boletin.disposiciones)}")
     if boletin.disposiciones:
-        print(f"  primera disposicion: {boletin.disposiciones[0].cod}")
+        print(f"  primera disposicion: {boletin.disposiciones[0].cod}, {boletin.disposiciones[0].num}, {boletin.disposiciones[0].fecha}, {boletin.disposiciones[0].contenido[:100] if boletin.disposiciones[0].contenido else 'empty'}...")
 
     print(f"\n=== get_sumario({fecha}) ===")
     sumario = client.get_sumario(fecha)

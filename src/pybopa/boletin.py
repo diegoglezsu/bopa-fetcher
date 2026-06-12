@@ -69,7 +69,7 @@ class Boletin:
         day = self.fecha.strftime("%d")
         month = self.fecha.strftime("%m")
         year = self.fecha.strftime("%Y")
-        url = f"https://sede.asturias.es/ultimos-boletines?p_r_p_summaryDate={
+        url = f"https://miprincipado.asturias.es/bopa-sumario?p_r_p_summaryDate={
             day}%2F{month}%2F{year}"
 
         # Obtener el contenido HTML de la página
@@ -79,16 +79,12 @@ class Boletin:
         # Parsear el HTML usando BeautifulSoup
         soup = BeautifulSoup(html_content, "html.parser")
 
-        # Buscar el elemento h3 con la clase "tit-redon-azul"
-        h3_element = soup.find('h3', class_='tit-redon-azul')
-
-        # Extraer el texto dentro del span
-        span_text = h3_element.find('span').get_text(strip=True)
-
-        # Buscar el número de boletín en el texto
-        match = re.search(r'Boletín Nº (\d+)', span_text)
-        if match:
-            self.num = match.group(1)
+        # Buscar el número de boletín en el h1
+        h1_element = soup.find('h1', class_='gpa-mt-xl')
+        if h1_element:
+            match = re.search(r'Boletín Nº (\d+)', h1_element.get_text())
+            if match:
+                self.num = match.group(1)
 
         # Encontrar el elemento div con id="bopa-boletin"
         boletin_div = soup.find("div", {"id": "bopa-boletin"})

@@ -4,7 +4,6 @@ import requests
 import re
 import json
 from bs4 import BeautifulSoup
-from datetime import datetime
 
 
 class Disposicion:
@@ -51,14 +50,13 @@ class Disposicion:
             Una lista con el contenido del boletín.
         """
 
-        url = f"https://sede.asturias.es/ast/bopa-disposiciones?p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb&p_p_lifecycle=0&_pa_sede_bopa_web_portlet_SedeBopaDispositionWeb_mvcRenderCommandName=%2Fdisposition%2Fdetail&p_r_p_dispositionText={
+        url = f"https://miprincipado.asturias.es/bopa/disposiciones?p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb&p_p_lifecycle=0&_pa_sede_bopa_web_portlet_SedeBopaDispositionWeb_mvcRenderCommandName=%2Fdisposition%2Fdetail&p_r_p_dispositionText={
             self.cod}&p_r_p_dispositionReference={self.cod}&p_r_p_dispositionDate={self.fecha.strftime("%d%%2F%m%%2F%Y")}"
 
         # print(f"Consultando {url}")
 
         # Obtener el contenido HTML de la página
         response = requests.get(url, timeout=60)
-        print(response)
         html_content = response.content
 
         # Parsear el HTML usando BeautifulSoup
