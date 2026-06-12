@@ -1,48 +1,47 @@
 """Small script to query BOPA data using the pybopa library."""
 
-import sys
-
 from pybopa.api import Client
 
 
 def main() -> int:
 
-    fecha = sys.argv[1]
+    date_from = '12/06/2026'
+    date_to = '12/06/2026'
+
     client = Client()
 
-    print(f"\n=== get_boletin({fecha}) ===")
-    boletin = client.get_boletin(fecha)
+    print(f"\n=== get_bulletin({date_from}) ===")
+    boletin = client.get_bulletin(date_from)
     print(f"  num: {boletin.num}")
-    print(f"  fecha: {boletin.fecha}")
+    print(f"  fecha: {boletin.date}")
     print(f"  sumario keys: {list(boletin.sumario.keys())}")
-    print(f"  disposiciones count: {len(boletin.disposiciones)}")
-    if boletin.disposiciones:
-        print(f"  primera disposicion: {boletin.disposiciones[0].cod}, {boletin.disposiciones[0].num}, {boletin.disposiciones[0].fecha}, {boletin.disposiciones[0].contenido[:100] if boletin.disposiciones[0].contenido else 'empty'}...")
+    print(f"  articles count: {len(boletin.articles)}")
+    if boletin.articles:
+        print(f"  primera disposicion: {boletin.articles[0]}")
 
-    print(f"\n=== get_sumario({fecha}) ===")
-    sumario = client.get_sumario(fecha)
-    print(f"  type: {type(sumario).__name__}")
-    print(f"  keys: {list(sumario.keys())[:3]}...")
+'''
+    print(f"\n=== get_article(cod='2026-04782', num='1', date='12/06/2026') ===")
+    article = client.get_article(cod="2026-04782", num="1", date="12/06/2026")
 
-    print(f"\n=== get_disposicion(cod='2024-03997', num='1', fecha='13/05/2024') ===")
-    disp = client.get_disposicion(cod="2024-03997", num="1", fecha="13/05/2024")
-    print(f"  cod: {disp.cod}")
-    print(f"  contenido (first 100 chars): {disp.contenido[0][:100] if disp.contenido else 'empty'}")
-
-    print(f"\n=== get_boletines(desde='{fecha}', hasta='{fecha}') ===")
-    boletines = client.get_boletines(fecha, fecha)
-    print(f"  count: {len(boletines)}")
-    if boletines:
-        print(f"  first num: {boletines[0].num}")
-
-    print(f"\n=== get_disposiciones(desde='{fecha}', hasta='{fecha}') ===")
-    disposiciones = client.get_disposiciones(fecha, fecha)
-    print(f"  count: {len(disposiciones)}")
-    if disposiciones:
-        print(f"  first: {disposiciones[0][:100]}...")
-
-    return 0
-
+    print(f"\n=== get_bulletins(date_from='{date_from}', date_to='{date_to}') ===")
+    bulletins = client.get_bulletins(date_from, date_to)
+    print(f"  bulletins count: {len(bulletins)}")
+    grouped_by_date = {}
+    for b in bulletins:
+        grouped_by_date.setdefault(b.date, []).append(b)
+    for date, bs in grouped_by_date.items():
+        print(f"  {date}: {len(bs)} boletín(es)")
+    
+    print(f"\n=== get_articles(date_from='{date_from}', date_to='{date_to}') ===")
+    articles = client.get_articles(date_from, date_to)
+    print(f"  articles count: {len(articles)}")
+    grouped_by_date = {}
+    for d in articles:
+        print(d)
+        grouped_by_date.setdefault(d.date, []).append(d)
+    for date, ds in grouped_by_date.items():
+        print(f"  {date}: {len(ds)} artículo(s)")
+'''
 
 if __name__ == "__main__":
     raise SystemExit(main())

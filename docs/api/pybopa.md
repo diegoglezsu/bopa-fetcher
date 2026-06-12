@@ -13,6 +13,12 @@ The pybopa library is split into two layers:
 
 ## Client
 
+::: pybopa.api.client.Client
+    options:
+      heading_level: 3
+      show_root_heading: true
+      show_root_toc_entry: true
+
 ## Models
 
 ## Constants
