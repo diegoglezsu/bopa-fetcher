@@ -4,35 +4,22 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from .article import Article
+from ..models import BulletinSummary, BulletinSummaryEntry
 
 
 class Bulletin:
     """
-    A class to represent an Official Bulletin of the Principality of Asturias (BOPA).
-
-    Attributes
-    ----------
-    num : str, optional
-        The bulletin number (default is None).
-    date : datetime
-        The bulletin date.
-    cods : list
-        A list of disposition codes in the bulletin.
-    sumario : dict
-        The parsed summary content of the bulletin.
-    articles : list
-        A list of Article objects representing the bulletin's dispositions.
+    Service for fetching BOPA summaries and article detail pages.
     """
 
     def __init__(self, date=None):
         """
-        Builds all necessary attributes for the Bulletin object.
+        Builds all necessary attributes for the Bulletin service.
 
         Parameters
         ----------
         date : str, optional
-            The bulletin date (default is None).
+            The bulletin date in dd/mm/yyyy format. Defaults to today.
         """
 
         if date is None:
@@ -44,19 +31,24 @@ class Bulletin:
                 raise ValueError(
                     "Invalid date format. Please provide a date in dd/mm/yyyy format."
                 )
+            # saturday and sunday BOPA is not available
+            if self.date.weekday() in [5, 6]:
+                raise ValueError(
+                    "Invalid date. The BOPA bulletin is not published on Saturdays and Sundays."
+                )
 
-        self.cods = []
-        self.sumario = self._get_sumario()
+        self.num = None
+        self.sumario = None
         self.articles = []
 
-    def _get_bulletin(self):
+    def _get_bulletin_html(self):
         """
-        Fetches the HTML content of the bulletin from the specified URL.
+        Fetches the HTML content of the bulletin summary page.
 
         Returns
         -------
         bs4.element.Tag
-            The div containing the bulletin if found, otherwise raises an exception.
+            The div containing the bulletin if found.
 
         Raises
         ------
@@ -67,16 +59,17 @@ class Bulletin:
         day = self.date.strftime("%d")
         month = self.date.strftime("%m")
         year = self.date.strftime("%Y")
-        url = f"https://miprincipado.asturias.es/bopa-sumario?p_r_p_summaryDate={day}%2F{month}%2F{year}"
+        url = (
+            "https://miprincipado.asturias.es/bopa-sumario"
+            f"?p_r_p_summaryDate={day}%2F{month}%2F{year}"
+        )
 
         response = requests.get(url, timeout=60)
-        html_content = response.content
+        soup = BeautifulSoup(response.content, "html.parser")
 
-        soup = BeautifulSoup(html_content, "html.parser")
-
-        h1_element = soup.find('h1', class_='gpa-mt-xl')
+        h1_element = soup.find("h1", class_="gpa-mt-xl")
         if h1_element:
-            match = re.search(r'Boletín Nº (\d+)', h1_element.get_text())
+            match = re.search(r"\b(\d+)\b", h1_element.get_text())
             if match:
                 self.num = match.group(1)
 
@@ -84,84 +77,110 @@ class Bulletin:
 
         if boletin_div:
             return boletin_div
-        else:
-            raise Exception("Could not find div with id='bopa-boletin'.")
 
-    def _get_sumario(self):
+        raise Exception("Could not find div with id='bopa-boletin'.")
+
+    def _build_article_link_html(self, code):
+        base = "https://miprincipado.asturias.es/bopa/disposiciones"
+        params = (
+            "p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb"
+            "&p_p_lifecycle=0"
+            "&_pa_sede_bopa_web_portlet_SedeBopaDispositionWeb_mvcRenderCommandName=%2Fdisposition%2Fdetail"
+            f"&p_r_p_dispositionText={code}"
+            f"&p_r_p_dispositionReference={code}"
+            f"&p_r_p_dispositionDate={self.date.strftime('%d%%2F%m%%2F%Y')}"
+        )
+        return f"{base}?{params}"
+
+    def _build_article_link_pdf(self, code):
+        return (
+            f"https://miprincipado.asturias.es/bopa/"
+            f"{self.date.strftime('%Y/%m/%d')}/{code}.pdf"
+        )
+
+    def _build_origin(self, *parts):
+        return " / ".join(part for part in parts if part)
+
+    def _parse_summary(self):
         """
-        Parses the bulletin content and returns it as a structured dictionary.
+        Parses the bulletin content and returns it as a structured summary.
 
         Returns
         -------
-        dict
-            A dictionary containing the structured content of the bulletin.
+        BulletinSummary
+            Structured summary for the bulletin.
         """
 
-        boletin_div = self._get_bulletin()
+        boletin_div = self._get_bulletin_html()
 
-        headers_dict = {}
-
-        current_h4 = None
-        current_h5 = None
-        current_h6 = None
+        entries = []
+        current_part = None
+        current_chapter = None
+        current_topic = None
         current_subauthor = None
 
         for element in boletin_div.children:
-
-            if element.name == 'h4':
-                current_h4 = element.get_text().strip()
-                headers_dict[current_h4] = {}
-                current_h5 = None
-                current_h6 = None
+            if element.name == "h4":
+                current_part = element.get_text().strip()
+                current_chapter = None
+                current_topic = None
                 current_subauthor = None
 
-            elif element.name == 'h5' and current_h4:
-                current_h5 = element.get_text().strip()
-                headers_dict[current_h4][current_h5] = {}
-                current_h6 = None
+            elif element.name == "h5" and current_part:
+                current_chapter = element.get_text().strip()
+                current_topic = None
                 current_subauthor = None
 
-            elif element.name == 'h6' and current_h4 and current_h5:
-                current_h6 = element.get_text().strip()
-                headers_dict[current_h4][current_h5][current_h6] = []
+            elif element.name == "h6" and current_chapter:
+                current_topic = element.get_text().strip()
                 current_subauthor = None
 
-            elif element.name == 'p' and current_h6 and 'subAuthor' in element.get('class', []):
+            elif (
+                element.name == "p"
+                and current_topic
+                and "subAuthor" in element.get("class", [])
+            ):
                 current_subauthor = element.get_text().strip()
 
-            elif element.name == 'dl' and current_h6:
-                for dt in element.find_all('dt'):
-                    entry = {}
-                    dt_text = dt.get_text(separator=' ').strip()
-
-                    code_match = re.search(r'\[Cód\. (\d+-\d+)\]', dt_text)
+            elif element.name == "dl" and current_topic:
+                for dt in element.find_all("dt"):
+                    dt_text = dt.get_text(separator=" ").strip()
+                    code_match = re.search(r"\[[^\]]*?(\d{4}-\d+)[^\]]*\]", dt_text)
                     if code_match:
                         code = code_match.group(1)
-                        dt_text = dt_text.replace(
-                            code_match.group(0), '').strip()
-                        self.cods.append(code)
+                        dt_text = dt_text.replace(code_match.group(0), "").strip()
                     else:
-                        code = 'N/A'
+                        code = "N/A"
 
-                    entry['description'] = dt_text
-                    entry['code'] = code
-                    if current_subauthor:
-                        entry['subauthor'] = current_subauthor
+                    entries.append(
+                        BulletinSummaryEntry(
+                            code=code,
+                            origin=self._build_origin(
+                                current_part,
+                                current_chapter,
+                                current_topic,
+                                current_subauthor,
+                            ),
+                            description=dt_text,
+                            link_html=self._build_article_link_html(code),
+                            link_pdf=self._build_article_link_pdf(code),
+                        )
+                    )
 
-                    headers_dict[current_h4][current_h5][current_h6].append(
-                        entry)
+        return BulletinSummary(num=self.num, date=self.date, summary=entries)
 
-        return headers_dict
-
-    def get_sumario(self):
+    def get_bulletin(self):
         """
-        Returns the bulletin summary.
+        Returns the structured bulletin summary.
 
         Returns
         -------
-        dict
-            A dictionary containing the bulletin summary.
+        BulletinSummary
+            The bulletin summary as a Python object.
         """
+
+        if self.sumario is None:
+            self.sumario = self._parse_summary()
         return self.sumario
 
     def get_cod_disposiciones(self):
@@ -173,21 +192,6 @@ class Bulletin:
         list
             A list of disposition codes in the bulletin.
         """
-        return self.cods
 
-    def _get_articles(self):
-        """
-        Fetches the articles of the bulletin from sede.asturias.
+        return self.get_bulletin().codes
 
-        Returns
-        -------
-        list
-            A list of Disposicion objects representing the bulletin's dispositions.
-        """
-
-        if not self.articles:
-            for code in self.cods:
-                article = Article(
-                    cod=code, num=self.num, date=self.date)
-                self.articles.append(article)
-        return self.articles

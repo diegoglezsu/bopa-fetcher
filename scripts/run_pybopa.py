@@ -6,18 +6,20 @@ from pybopa.api import Client
 def main() -> int:
 
     date_from = '12/06/2026'
-    date_to = '12/06/2026'
+    date_to = '13/06/2026'
 
     client = Client()
 
     print(f"\n=== get_bulletin({date_from}) ===")
     boletin = client.get_bulletin(date_from)
-    print(f"  num: {boletin.num}")
-    print(f"  fecha: {boletin.date}")
-    print(f"  sumario keys: {list(boletin.sumario.keys())}")
-    print(f"  articles count: {len(boletin.articles)}")
-    if boletin.articles:
-        print(f"  primera disposicion: {boletin.articles[0]}")
+    to_json = boletin.to_dict()
+    print(f"  boletin: {to_json}")
+
+    print(f"\n=== get_bulletin({date_to}) ===")
+    boletin = client.get_bulletin(date_to)
+    to_json = boletin.to_dict()
+    print(f"  boletin: {to_json}")
+
 
 '''
     print(f"\n=== get_article(cod='2026-04782', num='1', date='12/06/2026') ===")
