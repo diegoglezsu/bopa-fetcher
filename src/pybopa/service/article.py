@@ -3,9 +3,8 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from pybopa.constants import BOPA_URL, DISPOSITONS_URL
-
 from ..models import BulletinArticle
+from .links import build_link_html, build_link_pdf, build_origin
 
 
 class Article:
@@ -37,26 +36,6 @@ class Article:
             return date
         return datetime.strptime(date, "%d/%m/%Y")
 
-    def _build_link_html(self):
-        params = (
-            "p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb"
-            "&p_p_lifecycle=0"
-            "&_pa_sede_bopa_web_portlet_SedeBopaDispositionWeb_mvcRenderCommandName=%2Fdisposition%2Fdetail"
-            f"&p_r_p_dispositionText={self.cod}"
-            f"&p_r_p_dispositionReference={self.cod}"
-            f"&p_r_p_dispositionDate={self.date.strftime('%d%%2F%m%%2F%Y')}"
-        )
-        return f"{DISPOSITONS_URL}?{params}"
-
-    def _build_link_pdf(self):
-        return (
-            BOPA_URL,
-            f"{self.date.strftime('%Y/%m/%d')}/{self.cod}.pdf"
-        )
-
-    def _build_origin(self, *parts):
-        return " / ".join(part for part in parts if part)
-
     def _get_article_html(self):
         """
         Fetches the HTML content of the article detail page.
@@ -72,7 +51,7 @@ class Article:
             If the div with id='bopa-articulo' is not found or is empty.
         """
 
-        response = requests.get(self._build_link_html(), timeout=60)
+        response = requests.get(build_link_html(self.date, self.cod), timeout=60)
         soup = BeautifulSoup(response.content, "html.parser")
         article_div = soup.find("div", {"id": "bopa-articulo"})
 
@@ -124,10 +103,10 @@ class Article:
             code=self.cod,
             num=self.num,
             date=self.date,
-            origin=self._build_origin(*origin_parts),
+            origin=build_origin(*origin_parts),
             content=content,
-            link_html=self._build_link_html(),
-            link_pdf=self._build_link_pdf(),
+            link_html=build_link_html(self.date, self.cod),
+            link_pdf=build_link_pdf(self.date, self.cod),
         )
 
     def get_article(self):

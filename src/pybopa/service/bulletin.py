@@ -4,9 +4,10 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from pybopa.constants import BOPA_URL, DISPOSITONS_URL, SUMMARY_URL
+from pybopa.constants import SUMMARY_URL
 
 from ..models import BulletinSummary, BulletinSummaryEntry
+from .links import build_link_html, build_link_pdf, build_origin
 
 
 class Bulletin:
@@ -61,10 +62,7 @@ class Bulletin:
         day = self.date.strftime("%d")
         month = self.date.strftime("%m")
         year = self.date.strftime("%Y")
-        url = (
-            SUMMARY_URL,
-            f"?p_r_p_summaryDate={day}%2F{month}%2F{year}"
-        )
+        url = f"{SUMMARY_URL}?p_r_p_summaryDate={day}%2F{month}%2F{year}"
 
         response = requests.get(url, timeout=60)
         soup = BeautifulSoup(response.content, "html.parser")
@@ -81,26 +79,6 @@ class Bulletin:
             return boletin_div
 
         raise Exception("Could not find div with id='bopa-boletin'.")
-
-    def _build_article_link_html(self, code):
-        params = (
-            "p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb"
-            "&p_p_lifecycle=0"
-            "&_pa_sede_bopa_web_portlet_SedeBopaDispositionWeb_mvcRenderCommandName=%2Fdisposition%2Fdetail"
-            f"&p_r_p_dispositionText={code}"
-            f"&p_r_p_dispositionReference={code}"
-            f"&p_r_p_dispositionDate={self.date.strftime('%d%%2F%m%%2F%Y')}"
-        )
-        return f"{DISPOSITONS_URL}?{params}"
-
-    def _build_article_link_pdf(self, code):
-        return (
-            BOPA_URL,
-            f"{self.date.strftime('%Y/%m/%d')}/{code}.pdf"
-        )
-
-    def _build_origin(self, *parts):
-        return " / ".join(part for part in parts if part)
 
     def _parse_summary(self):
         """
@@ -156,15 +134,15 @@ class Bulletin:
                     entries.append(
                         BulletinSummaryEntry(
                             code=code,
-                            origin=self._build_origin(
+                            origin=build_origin(
                                 current_part,
                                 current_chapter,
                                 current_topic,
                                 current_subauthor,
                             ),
                             description=dt_text,
-                            link_html=self._build_article_link_html(code),
-                            link_pdf=self._build_article_link_pdf(code),
+                            link_html=build_link_html(self.date, code),
+                            link_pdf=build_link_pdf(self.date, code),
                         )
                     )
 
