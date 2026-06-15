@@ -10,19 +10,31 @@ def main() -> int:
 
     client = Client()
 
+    '''
     print(f"\n=== get_bulletin({date_from}) ===")
     boletin = client.get_bulletin(date_from)
     to_json = boletin.to_dict()
     print(f"  boletin: {to_json}")
-    '''
     print(f"\n=== get_bulletin({date_to}) ===")
     boletin = client.get_bulletin(date_to)
     to_json = boletin.to_dict()
     print(f"  boletin: {to_json}")
     '''
 
-    print(f"\n=== get_article(cod='2026-04782', num='1', date='12/06/2026') ===")
-    article = client.get_article(cod="2026-04782", num="1", date="12/06/2026")
+    print(f"\n=== get_bulletin(date='29/12/2023') === (suplements)")
+    boletin = client.get_bulletin(date='29/12/2023')
+    to_json = boletin.to_dict()
+    print(f"  boletin: {to_json}")
+
+    '''
+    print(f"\n=== get_article(cod='2026-04782', date='12/06/2026') ===")
+    article = client.get_article(cod="2026-04782", date="12/06/2026")
+    to_json = article.to_dict()
+    print(f"  article: {to_json}")
+    '''
+
+    print(f"\n=== get_article(cod='2023-11737', date='29/12/2023') === (suplements)")
+    article = client.get_article(cod="2023-11737", date="29/12/2023")
     to_json = article.to_dict()
     print(f"  article: {to_json}")
 

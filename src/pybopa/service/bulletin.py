@@ -4,6 +4,8 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from pybopa.constants import BOPA_URL, DISPOSITONS_URL, SUMMARY_URL
+
 from ..models import BulletinSummary, BulletinSummaryEntry
 
 
@@ -60,7 +62,7 @@ class Bulletin:
         month = self.date.strftime("%m")
         year = self.date.strftime("%Y")
         url = (
-            "https://miprincipado.asturias.es/bopa-sumario"
+            SUMMARY_URL,
             f"?p_r_p_summaryDate={day}%2F{month}%2F{year}"
         )
 
@@ -81,7 +83,6 @@ class Bulletin:
         raise Exception("Could not find div with id='bopa-boletin'.")
 
     def _build_article_link_html(self, code):
-        base = "https://miprincipado.asturias.es/bopa/disposiciones"
         params = (
             "p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb"
             "&p_p_lifecycle=0"
@@ -90,11 +91,11 @@ class Bulletin:
             f"&p_r_p_dispositionReference={code}"
             f"&p_r_p_dispositionDate={self.date.strftime('%d%%2F%m%%2F%Y')}"
         )
-        return f"{base}?{params}"
+        return f"{DISPOSITONS_URL}?{params}"
 
     def _build_article_link_pdf(self, code):
         return (
-            f"https://miprincipado.asturias.es/bopa/"
+            BOPA_URL,
             f"{self.date.strftime('%Y/%m/%d')}/{code}.pdf"
         )
 
@@ -182,16 +183,4 @@ class Bulletin:
         if self.sumario is None:
             self.sumario = self._parse_summary()
         return self.sumario
-
-    def get_cod_disposiciones(self):
-        """
-        Returns a list of disposition codes in the bulletin.
-
-        Returns
-        -------
-        list
-            A list of disposition codes in the bulletin.
-        """
-
-        return self.get_bulletin().codes
 

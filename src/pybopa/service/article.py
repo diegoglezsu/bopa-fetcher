@@ -3,6 +3,8 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from pybopa.constants import BOPA_URL, DISPOSITONS_URL
+
 from ..models import BulletinArticle
 
 
@@ -36,7 +38,6 @@ class Article:
         return datetime.strptime(date, "%d/%m/%Y")
 
     def _build_link_html(self):
-        base = "https://miprincipado.asturias.es/bopa/disposiciones"
         params = (
             "p_p_id=pa_sede_bopa_web_portlet_SedeBopaDispositionWeb"
             "&p_p_lifecycle=0"
@@ -45,11 +46,11 @@ class Article:
             f"&p_r_p_dispositionReference={self.cod}"
             f"&p_r_p_dispositionDate={self.date.strftime('%d%%2F%m%%2F%Y')}"
         )
-        return f"{base}?{params}"
+        return f"{DISPOSITONS_URL}?{params}"
 
     def _build_link_pdf(self):
         return (
-            f"https://miprincipado.asturias.es/bopa/"
+            BOPA_URL,
             f"{self.date.strftime('%Y/%m/%d')}/{self.cod}.pdf"
         )
 
