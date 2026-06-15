@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 
-from ..models import BulletinSummary
-from ..service.bulletin import Bulletin
+from ..models import BulletinArticle, BulletinSummary
 from ..service.article import Article
+from ..service.bulletin import Bulletin
 
 
 class Client:
@@ -53,7 +53,7 @@ class Client:
 
         return summaries
 
-    def get_article(self, cod: str, num: str, date: str) -> Article:
+    def get_article(self, cod: str, num: str, date: str) -> BulletinArticle:
         """Returns the article for a specific code and number.
 
         Parameters
@@ -67,12 +67,12 @@ class Client:
 
         Returns
         -------
-        Article
+        BulletinArticle
             The article corresponding to the code and number.
         """
-        return Article(cod=cod, num=num, date=datetime.strptime(date, "%d/%m/%Y"))
+        return Article(cod=cod, num=num, date=date).get_article()
 
-    def get_articles(self, date_from: str, date_to: str) -> list[Article]:
+    def get_articles(self, date_from: str, date_to: str) -> list[BulletinArticle]:
         """Returns all articles in a date range.
 
         Parameters
@@ -84,7 +84,7 @@ class Client:
 
         Returns
         -------
-        list[Article]
+        list[BulletinArticle]
             List of articles in the specified range.
         """
         articles = []
@@ -95,7 +95,11 @@ class Client:
         while current_date <= end_date:
             fecha_str = current_date.strftime("%d/%m/%Y")
             try:
-                articles.extend(Bulletin(date=fecha_str).get_articles())
+                bulletin = self.get_bulletin(fecha_str)
+                articles.extend(
+                    Article(cod=cod, num=bulletin.num, date=bulletin.date).get_article()
+                    for cod in bulletin.codes
+                )
             except Exception:
                 pass
             current_date += timedelta(days=1)

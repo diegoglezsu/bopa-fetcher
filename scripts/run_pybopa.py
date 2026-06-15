@@ -14,17 +14,19 @@ def main() -> int:
     boletin = client.get_bulletin(date_from)
     to_json = boletin.to_dict()
     print(f"  boletin: {to_json}")
-
+    '''
     print(f"\n=== get_bulletin({date_to}) ===")
     boletin = client.get_bulletin(date_to)
     to_json = boletin.to_dict()
     print(f"  boletin: {to_json}")
+    '''
 
-
-'''
     print(f"\n=== get_article(cod='2026-04782', num='1', date='12/06/2026') ===")
     article = client.get_article(cod="2026-04782", num="1", date="12/06/2026")
+    to_json = article.to_dict()
+    print(f"  article: {to_json}")
 
+    '''
     print(f"\n=== get_bulletins(date_from='{date_from}', date_to='{date_to}') ===")
     bulletins = client.get_bulletins(date_from, date_to)
     print(f"  bulletins count: {len(bulletins)}")
@@ -43,7 +45,7 @@ def main() -> int:
         grouped_by_date.setdefault(d.date, []).append(d)
     for date, ds in grouped_by_date.items():
         print(f"  {date}: {len(ds)} artículo(s)")
-'''
+    '''
 
 if __name__ == "__main__":
     raise SystemExit(main())
