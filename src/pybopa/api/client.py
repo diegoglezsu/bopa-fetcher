@@ -53,7 +53,7 @@ class Client:
 
         return summaries
 
-    def get_article(self, cod: str, num: str, date: str) -> BulletinArticle:
+    def get_article(self, cod: str, date: str) -> BulletinArticle:
         """Returns the article for a specific code and number.
 
         Parameters
@@ -70,7 +70,7 @@ class Client:
         BulletinArticle
             The article corresponding to the code and number.
         """
-        return Article(cod=cod, num=num, date=date).get_article()
+        return Article(cod=cod, date=date).get_article()
 
     def get_articles(self, date_from: str, date_to: str) -> list[BulletinArticle]:
         """Returns all articles in a date range.

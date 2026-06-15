@@ -67,18 +67,23 @@ class Article:
 
         Raises
         ------
-        Exception
-            If the div with id='bopa-articulo' is not found.
+        ArticleNotFoundError
+            If the div with id='bopa-articulo' is not found or is empty.
         """
 
         response = requests.get(self._build_link_html(), timeout=60)
         soup = BeautifulSoup(response.content, "html.parser")
         article_div = soup.find("div", {"id": "bopa-articulo"})
 
-        if article_div:
-            return article_div
+        if article_div is None:
+            raise Exception("Could not find div with id='bopa-articulo'.")
 
-        raise Exception("Could not find div with id='bopa-articulo'.")
+        if not article_div.get_text(strip=True):
+            raise Exception(
+                f"Article '{self.cod}' has no content."
+            )
+
+        return article_div
 
     def _parse_article(self):
         """
@@ -108,6 +113,11 @@ class Article:
                 text = element.get_text(separator=" ").strip()
                 if text:
                     content.append(text)
+
+        if not content:
+            raise Exception(
+                f"Article '{self.cod}' was found but has no body content."
+            )
 
         return BulletinArticle(
             code=self.cod,
