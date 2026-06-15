@@ -1,8 +1,8 @@
-site_name: pybopa
-site_description: Documentation for pybopa
-site_url: https://diegoglezsu.github.io/pybopa/
-repo_url: https://github.com/diegoglezsu/pybopa
-repo_name: diegoglezsu/pybopa
+site_name: py-bopa
+site_description: Documentation for py-bopa
+site_url: https://diegoglezsu.github.io/py-bopa/
+repo_url: https://github.com/diegoglezsu/py-bopa
+repo_name: diegoglezsu/py-bopa
 
 theme:
   name: material
@@ -39,9 +39,9 @@ nav:
   - getting-started.md
   - development.md
   - API Reference:
-      - pybopa: api/pybopa.md
+      - py-bopa: api/py-bopa.md
   - Use Cases:
-      - use_cases/pybopa.md
+      - use_cases/py-bopa.md
 
 markdown_extensions:
   - admonition

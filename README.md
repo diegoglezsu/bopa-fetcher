@@ -1,26 +1,26 @@
 # pybopa
 
-[![Tests](https://github.com/diegoglezsu/pybopa/actions/workflows/tests.yml/badge.svg)](https://github.com/diegoglezsu/pybopa/actions/workflows/tests.yml)
-[![CodeQL](https://github.com/diegoglezsu/pybopa/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/diegoglezsu/pybopa/actions/workflows/github-code-scanning/codeql)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegoglezsu_pybopa&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegoglezsu_pybopa)
-[![Codecov status](https://codecov.io/github/diegoglezsu/pybopa/badge.svg?branch=main&service=github)](https://app.codecov.io/github/diegoglezsu/pybopa)
-[![PyPI version](https://img.shields.io/pypi/v/pybopa.svg)](https://pypi.org/project/pybopa/)
-[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://diegoglezsu.github.io/pybopa/)
-[![DOI](https://zenodo.org/badge/1193786609.svg)](https://doi.org/10.5281/zenodo.20156191)
+[![Tests](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegoglezsu_py-bopa&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegoglezsu_py-bopa)
+[![Codecov status](https://codecov.io/github/diegoglezsu/py-bopa/badge.svg?branch=main&service=github)](https://app.codecov.io/github/diegoglezsu/py-bopa)
+[![PyPI version](https://img.shields.io/pypi/v/py-bopa.svg)](https://pypi.org/project/py-bopa/)
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://diegoglezsu.github.io/py-bopa/)
+[![DOI](https://zenodo.org/badge/1193786609.svg)]()
 
 ## Description
 
-![Pybopa Logo](https://raw.githubusercontent.com/diegoglezsu/pybopa/main/docs/assets/logo.png)
+![Pybopa Logo](https://raw.githubusercontent.com/diegoglezsu/py-bopa/main/docs/assets/logo.png)
 
-**pybopa** is a Python library for programmatic access to
+**py-bopa** is a Python library for programmatic access to
 
-## Why pybopa?
+## Why py-bopa?
 
 ## Main features
 
 ## Use Cases
 
-pybopa can be used for:
+py-bopa can be used for:
 
 ## Quick Start
 
@@ -29,7 +29,7 @@ pybopa can be used for:
 Install from PyPI:
 
 ```bash
-pip install pybopa
+pip install py-bopa
 ```
 
 ### Basic Usage Example

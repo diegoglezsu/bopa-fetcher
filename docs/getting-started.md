@@ -10,7 +10,7 @@
 Install from PyPI:
 
 ```bash
-pip install pybopa
+pip install py-bopa
 ```
 
 ## First Query 🚀
@@ -21,4 +21,4 @@ pip install pybopa
 
 ### Run Example Scripts
 
-The repository includes runnable scripts and notebooks with examples and use cases of the library. These scripts can be found in the [`scripts`](https://github.com/diegoglezsu/pybopa/tree/main/scripts) directory.
+The repository includes runnable scripts and notebooks with examples and use cases of the library. These scripts can be found in the [`scripts`](https://github.com/diegoglezsu/py-bopa/tree/main/scripts) directory.

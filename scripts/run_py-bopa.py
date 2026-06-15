@@ -1,6 +1,6 @@
-"""Small script to query BOPA data using the pybopa library."""
+"""Small script to query BOPA data using the py-bopa library."""
 
-from pybopa.api import Client
+from bopa.api import Client
 
 
 def main() -> int:

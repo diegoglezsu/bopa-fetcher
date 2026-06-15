@@ -1,4 +1,4 @@
-"""Top-level package for pybopa."""
+"""Top-level package for py-bopa."""
 
 __author__ = ["Diego González Suárez", "Noelia Rico"]
 __email__ = ["gonzalezsdiego@uniovi.es", "noeliarico@uniovi.es"]

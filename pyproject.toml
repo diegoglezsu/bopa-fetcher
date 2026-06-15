@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pybopa"
+name = "py-bopa"
 version = "0.1.0"
-description = "A Python package for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)."
+description = "A Python library for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)."
 readme = "README.md"
 requires-python = ">=3.7"
 license-files = ["LICENSE"]
@@ -51,10 +51,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://diegoglezsu.github.io/pybopa"
-Documentation = "https://diegoglezsu.github.io/pybopa"
-Repository = "https://github.com/diegoglezsu/pybopa.git"
-Issues = "https://github.com/diegoglezsu/pybopa/issues"
+Homepage = "https://diegoglezsu.github.io/py-bopa"
+Documentation = "https://diegoglezsu.github.io/py-bopa"
+Repository = "https://github.com/diegoglezsu/py-bopa.git"
+Issues = "https://github.com/diegoglezsu/py-bopa/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -1,4 +1,4 @@
-from pybopa.constants import BOPA_URL, DISPOSITONS_URL
+from bopa.constants import BOPA_URL, DISPOSITONS_URL
 
 
 def build_link_html(date, code):

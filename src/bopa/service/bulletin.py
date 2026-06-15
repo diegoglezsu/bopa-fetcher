@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from pybopa.constants import SUMMARY_URL
+from bopa.constants import SUMMARY_URL
 
 from ..models import BulletinSummary, BulletinSummaryEntry
 from .links import build_link_html, build_link_pdf, build_origin
