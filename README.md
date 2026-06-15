@@ -1,4 +1,4 @@
-# pybopa
+# py-bopa
 
 [![Tests](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql)
@@ -10,7 +10,7 @@
 
 ## Description
 
-![Pybopa Logo](https://raw.githubusercontent.com/diegoglezsu/py-bopa/main/docs/assets/logo.png)
+![py-bopa Logo](https://raw.githubusercontent.com/diegoglezsu/py-bopa/main/docs/assets/logo.png)
 
 **py-bopa** is a Python library for programmatic access to
 
@@ -54,7 +54,8 @@ For any questions or suggestions, feel free to reach out to the corresponding au
 
 - **Corresponding Author**: Diego González Suárez
 - **Email**: <gonzalezsdiego@uniovi.es>
-- **Collaborators**: Noelia Rico
+- **Collaborator**: Noelia Rico Pachón
+- **Email**: <noeeliarico@uniovi.es>
 
 ## Acknowledgements
 
