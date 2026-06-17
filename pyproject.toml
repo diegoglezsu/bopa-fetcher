@@ -29,12 +29,13 @@ classifiers = [
 license = "MIT"
 dependencies = [
   "bs4==0.0.2",
-  "matplotlib==3.9.0",
-  "numpy==1.26.4",
-  "pandas==2.2.2",
+  "matplotlib>=3.9.0",
+  "numpy>=2.1.0",
+  "pandas>=2.2.2",
   "requests==2.31.0",
-  "seaborn==0.13.2"
+  "seaborn>=0.13.2"
 ]
+
 
 [project.optional-dependencies]
 dev = [
