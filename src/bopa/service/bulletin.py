@@ -11,18 +11,14 @@ from .links import build_link_html, build_link_pdf, build_origin
 
 
 class Bulletin:
-    """
-    Service for fetching BOPA summaries and article detail pages.
-    """
+    """Service for fetching BOPA bulletin summaries from the web portal."""
 
     def __init__(self, date=None):
-        """
-        Builds all necessary attributes for the Bulletin service.
+        """Initialize the Bulletin service.
 
-        Parameters
-        ----------
-        date : str, optional
-            The bulletin date in dd/mm/yyyy format. Defaults to today.
+        Args:
+            date: Bulletin date in dd/mm/YYYY format. Defaults to today.
+                Weekdays only — Saturdays and Sundays raise a ValueError.
         """
 
         if date is None:
@@ -45,18 +41,13 @@ class Bulletin:
         self.articles = []
 
     def _get_bulletin_html(self):
-        f"""
-        Fetches the HTML content of the bulletin summary page.
+        """Fetch the HTML content of the bulletin summary page.
 
-        Returns
-        -------
-        bs4.element.Tag
-            The div containing the bulletin if found.
+        Returns:
+            The div containing the bulletin entries.
 
-        Raises
-        ------
-        Exception
-            If the div with id='{BOPA_BULLETIN_ID}' is not found.
+        Raises:
+            Exception: If the bulletin div is not found on the page.
         """
 
         day = self.date.strftime("%d")
@@ -81,13 +72,15 @@ class Bulletin:
         raise Exception(f"Could not find div with id='{BOPA_BULLETIN_ID}'.")
 
     def _parse_summary(self):
-        """
-        Parses the bulletin content and returns it as a structured summary.
+        """Parse the bulletin HTML into a structured summary.
 
-        Returns
-        -------
-        BulletinSummary
-            Structured summary for the bulletin.
+        Iterates over the child elements of the bulletin div, tracking
+        the current part (h4), chapter (h5), topic (h6), and sub-author
+        (p.subAuthor), then extracts each disposition entry from <dl><dt>
+        elements.
+
+        Returns:
+            BulletinSummary with all entries parsed.
         """
 
         boletin_div = self._get_bulletin_html()
@@ -149,13 +142,12 @@ class Bulletin:
         return BulletinSummary(num=self.num, date=self.date, summary=entries)
 
     def get_bulletin(self):
-        """
-        Returns the structured bulletin summary.
+        """Return the structured bulletin summary.
 
-        Returns
-        -------
-        BulletinSummary
-            The bulletin summary as a Python object.
+        Results are cached after the first call.
+
+        Returns:
+            BulletinSummary for the configured date.
         """
 
         if self.sumario is None:

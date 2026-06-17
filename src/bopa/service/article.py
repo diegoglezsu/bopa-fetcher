@@ -10,22 +10,15 @@ from .links import build_link_html, build_link_pdf, build_origin
 
 
 class Article:
-    """
-    Service for fetching BOPA article detail pages.
-    """
+    """Service for fetching full BOPA article detail pages."""
 
     def __init__(self, cod=None, num=None, date=None):
-        """
-        Builds all necessary attributes for the Article service.
+        """Initialize the Article service.
 
-        Parameters
-        ----------
-        cod : str
-            Article disposition code.
-        num : str
-            Bulletin number.
-        date : str or datetime
-            Bulletin date.
+        Args:
+            cod: Article disposition code (e.g. "2023-11737").
+            num: Bulletin number.
+            date: Bulletin date as a string (dd/mm/YYYY) or datetime object.
         """
 
         self.cod = cod
@@ -34,23 +27,27 @@ class Article:
         self.article = None
 
     def _parse_date(self, date):
+        """Parse a date string or datetime into a datetime object.
+
+        Args:
+            date: Date in dd/mm/YYYY format or a datetime object.
+
+        Returns:
+            Parsed datetime object.
+        """
         if isinstance(date, datetime):
             return date
         return datetime.strptime(date, "%d/%m/%Y")
 
     def _get_article_html(self):
-        f"""
-        Fetches the HTML content of the article detail page.
+        """Fetch the HTML content of the article detail page.
 
-        Returns
-        -------
-        bs4.element.Tag
-            The div containing the article if found.
+        Returns:
+            The div containing the article content.
 
-        Raises
-        ------
-        ArticleNotFoundError
-            If the div with id='{BOPA_ARTICLE_ID}' is not found or is empty.
+        Raises:
+            Exception: If the article div is not found or the article
+                has no content.
         """
 
         response = requests.get(build_link_html(self.date, self.cod), timeout=60)
@@ -68,13 +65,13 @@ class Article:
         return article_div
 
     def _parse_article(self):
-        """
-        Parses the article content and returns it as a structured object.
+        """Parse the article HTML into a structured BulletinArticle.
 
-        Returns
-        -------
-        BulletinArticle
-            Structured article with full content.
+        Extracts origin information from h4/h5/h6/subAuthor elements and
+        body text from all remaining child elements.
+
+        Returns:
+            BulletinArticle with full content and metadata.
         """
 
         article_div = self._get_article_html()
@@ -112,13 +109,12 @@ class Article:
         )
 
     def get_article(self):
-        """
-        Returns the structured article.
+        """Return the structured article.
 
-        Returns
-        -------
-        BulletinArticle
-            The article as a Python object.
+        Results are cached after the first call.
+
+        Returns:
+            BulletinArticle for the configured code and date.
         """
 
         if self.article is None:

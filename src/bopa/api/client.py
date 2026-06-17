@@ -9,34 +9,25 @@ class Client:
     """A client class to interact with the BOPA API and fetch bulletins and articles."""
 
     def get_bulletin(self, date: str) -> BulletinSummary:
-        """Returns the bulletin summary for a specific date.
+        """Fetch the bulletin summary for a specific date.
 
-        Parameters
-        ----------
-        date : str
-            Date in format dd/mm/YYYY.
+        Args:
+            date: Date in dd/mm/YYYY format (e.g. "29/12/2023").
 
-        Returns
-        -------
-        BulletinSummary
-            The structured bulletin summary corresponding to the date.
+        Returns:
+            BulletinSummary corresponding to the given date.
         """
         return Bulletin(date=date).get_bulletin()
 
     def get_bulletins(self, date_from: str, date_to: str) -> list[BulletinSummary]:
-        """Returns all bulletin summaries in a date range.
+        """Fetch all bulletin summaries in a date range.
 
-        Parameters
-        ----------
-        date_from : str
-            Start date in format dd/mm/YYYY.
-        date_to : str
-            End date in format dd/mm/YYYY.
+        Args:
+            date_from: Start date in dd/mm/YYYY format.
+            date_to: End date in dd/mm/YYYY format.
 
-        Returns
-        -------
-        list[BulletinSummary]
-            List of bulletin summaries in the specified range.
+        Returns:
+            List of BulletinSummary objects for each weekday in the range.
         """
         date_from = datetime.strptime(date_from, "%d/%m/%Y")
         date_to = datetime.strptime(date_to, "%d/%m/%Y")
@@ -54,38 +45,29 @@ class Client:
         return summaries
 
     def get_article(self, cod: str, date: str) -> BulletinArticle:
-        """Returns the article for a specific code and number.
+        """Fetch a specific article by code and date.
 
-        Parameters
-        ----------
-        cod : str
-            Code of the article.
-        num : str
-            Bulletin number of the article.
-        date : str
-            Date in format dd/mm/YYYY.
+        Args:
+            cod: Article disposition code (e.g. "2023-11737").
+            date: Date in dd/mm/YYYY format.
 
-        Returns
-        -------
-        BulletinArticle
-            The article corresponding to the code and number.
+        Returns:
+            BulletinArticle with full content and metadata.
         """
         return Article(cod=cod, date=date).get_article()
 
     def get_articles(self, date_from: str, date_to: str) -> list[BulletinArticle]:
-        """Returns all articles in a date range.
+        """Fetch all articles in a date range.
 
-        Parameters
-        ----------
-        date_from : str
-            Start date in format dd/mm/YYYY.
-        date_to : str
-            End date in format dd/mm/YYYY.
+        Iterates over each day in the range, retrieves the bulletin summary,
+        and fetches the full content of every article listed.
 
-        Returns
-        -------
-        list[BulletinArticle]
-            List of articles in the specified range.
+        Args:
+            date_from: Start date in dd/mm/YYYY format.
+            date_to: End date in dd/mm/YYYY format.
+
+        Returns:
+            List of BulletinArticle objects in the range.
         """
         articles = []
         start_date = datetime.strptime(date_from, "%d/%m/%Y")

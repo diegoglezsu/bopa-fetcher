@@ -12,7 +12,7 @@ from bopa.api import Client
 from bopa.models import BulletinArticle, BulletinSummary, BulletinSummaryEntry
 ```
 
-## Client
+## Api Functions
 
 ::: bopa.api.client.Client
     options:
@@ -22,23 +22,17 @@ from bopa.models import BulletinArticle, BulletinSummary, BulletinSummaryEntry
 
 ## Models
 
-### BulletinSummary
-
 ::: bopa.models.bulletin.BulletinSummary
     options:
       heading_level: 3
       show_root_heading: true
       show_root_toc_entry: true
 
-### BulletinSummaryEntry
-
 ::: bopa.models.bulletin.BulletinSummaryEntry
     options:
       heading_level: 3
       show_root_heading: true
       show_root_toc_entry: true
-
-### BulletinArticle
 
 ::: bopa.models.article.BulletinArticle
     options:
