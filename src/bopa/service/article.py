@@ -23,7 +23,7 @@ class Article:
 
         self.cod = cod
         self.num = num
-        self.date = self._parse_date(date)
+        self.date = self._parse_date(date) if date is not None else datetime.now()
         self.article = None
 
     def _parse_date(self, date):

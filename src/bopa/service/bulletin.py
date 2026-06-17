@@ -37,7 +37,7 @@ class Bulletin:
                 )
 
         self.num = None
-        self.sumario = None
+        self.summary = None
         self.articles = []
 
     def _get_bulletin_html(self):
@@ -150,7 +150,7 @@ class Bulletin:
             BulletinSummary for the configured date.
         """
 
-        if self.sumario is None:
-            self.sumario = self._parse_summary()
-        return self.sumario
+        if self.summary is None:
+            self.summary = self._parse_summary()
+        return self.summary
 
