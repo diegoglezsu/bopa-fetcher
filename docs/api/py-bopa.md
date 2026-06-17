@@ -8,7 +8,8 @@ The py-bopa library is split into two layers:
 ## Basic Imports
 
 ```python
-
+from bopa.api import Client
+from bopa.models import BulletinArticle, BulletinSummary, BulletinSummaryEntry
 ```
 
 ## Client
@@ -21,4 +22,26 @@ The py-bopa library is split into two layers:
 
 ## Models
 
-## Constants
+### BulletinSummary
+
+::: bopa.models.bulletin.BulletinSummary
+    options:
+      heading_level: 3
+      show_root_heading: true
+      show_root_toc_entry: true
+
+### BulletinSummaryEntry
+
+::: bopa.models.bulletin.BulletinSummaryEntry
+    options:
+      heading_level: 3
+      show_root_heading: true
+      show_root_toc_entry: true
+
+### BulletinArticle
+
+::: bopa.models.article.BulletinArticle
+    options:
+      heading_level: 3
+      show_root_heading: true
+      show_root_toc_entry: true

@@ -40,8 +40,6 @@ nav:
   - development.md
   - API Reference:
       - py-bopa: api/py-bopa.md
-  - Use Cases:
-      - use_cases/py-bopa.md
 
 markdown_extensions:
   - admonition
