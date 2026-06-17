@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from bopa.constants import SUMMARY_URL
+from bopa.constants import BOPA_BULLETIN_ID, SUMMARY_URL
 
 from ..models import BulletinSummary, BulletinSummaryEntry
 from .links import build_link_html, build_link_pdf, build_origin
@@ -45,7 +45,7 @@ class Bulletin:
         self.articles = []
 
     def _get_bulletin_html(self):
-        """
+        f"""
         Fetches the HTML content of the bulletin summary page.
 
         Returns
@@ -56,7 +56,7 @@ class Bulletin:
         Raises
         ------
         Exception
-            If the div with id='bopa-boletin' is not found.
+            If the div with id='{BOPA_BULLETIN_ID}' is not found.
         """
 
         day = self.date.strftime("%d")
@@ -73,12 +73,12 @@ class Bulletin:
             if match:
                 self.num = match.group(1)
 
-        boletin_div = soup.find("div", {"id": "bopa-boletin"})
+        boletin_div = soup.find("div", {"id": BOPA_BULLETIN_ID})
 
         if boletin_div:
             return boletin_div
 
-        raise Exception("Could not find div with id='bopa-boletin'.")
+        raise Exception(f"Could not find div with id='{BOPA_BULLETIN_ID}'.")
 
     def _parse_summary(self):
         """

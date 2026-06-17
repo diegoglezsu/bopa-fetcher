@@ -3,6 +3,8 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from bopa.constants import BOPA_ARTICLE_ID
+
 from ..models import BulletinArticle
 from .links import build_link_html, build_link_pdf, build_origin
 
@@ -37,7 +39,7 @@ class Article:
         return datetime.strptime(date, "%d/%m/%Y")
 
     def _get_article_html(self):
-        """
+        f"""
         Fetches the HTML content of the article detail page.
 
         Returns
@@ -48,15 +50,15 @@ class Article:
         Raises
         ------
         ArticleNotFoundError
-            If the div with id='bopa-articulo' is not found or is empty.
+            If the div with id='{BOPA_ARTICLE_ID}' is not found or is empty.
         """
 
         response = requests.get(build_link_html(self.date, self.cod), timeout=60)
         soup = BeautifulSoup(response.content, "html.parser")
-        article_div = soup.find("div", {"id": "bopa-articulo"})
+        article_div = soup.find("div", {"id": BOPA_ARTICLE_ID})
 
         if article_div is None:
-            raise Exception("Could not find div with id='bopa-articulo'.")
+            raise Exception(f"Could not find div with id='{BOPA_ARTICLE_ID}'.")
 
         if not article_div.get_text(strip=True):
             raise Exception(
