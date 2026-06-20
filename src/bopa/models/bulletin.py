@@ -20,7 +20,7 @@ class BulletinSummaryEntry:
     link_html: str
     link_pdf: str
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, str]:
         """Serialize the entry to a dictionary.
 
         Returns:
@@ -54,7 +54,7 @@ class BulletinSummary:
         """List of non-empty disposition codes in this bulletin."""
         return [entry.code for entry in self.summary if entry.code != "N/A"]
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, object]:
         """Serialize the bulletin summary to a dictionary.
 
         Returns:

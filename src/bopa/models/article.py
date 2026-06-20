@@ -25,7 +25,7 @@ class BulletinArticle:
     link_html: str
     link_pdf: str
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, object]:
         """Serialize the article to a dictionary.
 
         Returns:
