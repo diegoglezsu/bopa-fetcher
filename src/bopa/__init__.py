@@ -1,4 +1,4 @@
-"""py-bopa: A Python library for fetching structured information from BOPA.
+"""bopa-fetcher: A Python library for fetching structured information from BOPA.
 
 BOPA (Boletín Oficial del Principado de Asturias) is the official gazette
 of the region of Asturias, Spain. This library provides programmatic access

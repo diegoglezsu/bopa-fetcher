@@ -1,8 +1,8 @@
-site_name: py-bopa
-site_description: Documentation for py-bopa
-site_url: https://diegoglezsu.github.io/py-bopa/
-repo_url: https://github.com/diegoglezsu/py-bopa
-repo_name: diegoglezsu/py-bopa
+site_name: bopa-fetcher
+site_description: Documentation for bopa-fetcher
+site_url: https://diegoglezsu.github.io/bopa-fetcher/
+repo_url: https://github.com/diegoglezsu/bopa-fetcher
+repo_name: diegoglezsu/bopa-fetcher
 
 theme:
   name: material
@@ -39,7 +39,7 @@ nav:
   - getting-started.md
   - development.md
   - API Reference:
-      - py-bopa: api/py-bopa.md
+      - bopa-fetcher: api/bopa-fetcher.md
 
 markdown_extensions:
   - admonition

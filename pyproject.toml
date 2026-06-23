@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "py-bopa"
+name = "bopa-fetcher"
 version = "0.1.0"
 description = "A Python library for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)."
 readme = "README.md"
@@ -52,10 +52,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://diegoglezsu.github.io/py-bopa"
-Documentation = "https://diegoglezsu.github.io/py-bopa"
-Repository = "https://github.com/diegoglezsu/py-bopa.git"
-Issues = "https://github.com/diegoglezsu/py-bopa/issues"
+Homepage = "https://diegoglezsu.github.io/bopa-fetcher"
+Documentation = "https://diegoglezsu.github.io/bopa-fetcher"
+Repository = "https://github.com/diegoglezsu/bopa-fetcher.git"
+Issues = "https://github.com/diegoglezsu/bopa-fetcher/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

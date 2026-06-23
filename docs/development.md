@@ -1,6 +1,6 @@
 # Development
 
-This page describes the local workflow for contributing to py-bopa.
+This page describes the local workflow for contributing to bopa-fetcher.
 
 ## Local Setup
 
@@ -40,7 +40,7 @@ mkdocs serve
 
 ## Reporting Issues 🐞
 
-If you encounter any issues, please report them on the [GitHub Issues page](https://github.com/diegoglezsu/py-bopa/issues). When reporting an issue, please include:
+If you encounter any issues, please report them on the [GitHub Issues page](https://github.com/diegoglezsu/bopa-fetcher/issues). When reporting an issue, please include:
 
 - A clear and descriptive title.
 - A detailed description of the problem.

@@ -1,15 +1,15 @@
-# py-bopa Documentation
+# bopa-fetcher Documentation
 
-py-bopa is a Python library for searching and managing official bulletins,
+bopa-fetcher is a Python library for searching and managing official bulletins,
 focused on the BOPA (Boletín Oficial del Principado de Asturias).
 
 <div style="text-align: center; margin: 20px 0;">
-    <img src="assets/logo.png" alt="py-bopa Logo" width="200" />
+    <img src="assets/logo.png" alt="bopa-fetcher Logo" width="200" />
 </div>
 
-## Why py-bopa?
+## Why bopa-fetcher?
 
-[BOPA (Boletín Oficial del Principado de Asturias)](https://miprincipado.asturias.es/bopa) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **py-bopa** provides a simple, programmatic interface to:
+[BOPA (Boletín Oficial del Principado de Asturias)](https://miprincipado.asturias.es/bopa) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **bopa-fetcher** provides a simple, programmatic interface to:
 
 - Retrieve bulletin summaries and articles as structured Python objects.
 - Search across date ranges for both bulletins and individual articles.

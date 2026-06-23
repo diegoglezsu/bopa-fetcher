@@ -1,6 +1,6 @@
-# py-bopa API Reference
+# bopa-fetcher API Reference
 
-The py-bopa library is split into two layers:
+The bopa-fetcher library is split into two layers:
 
 - API layer: high-level client and typed parsing models.
 - Repository layer: connector for BOPA webpage and logic to extract information.

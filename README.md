@@ -1,22 +1,22 @@
-# py-bopa
+# bopa-fetcher
 
-[![Tests](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/tests.yml)
-[![CodeQL](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/diegoglezsu/py-bopa/actions/workflows/github-code-scanning/codeql)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegoglezsu_py-bopa&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegoglezsu_py-bopa)
-[![Codecov status](https://codecov.io/github/diegoglezsu/py-bopa/badge.svg?branch=main&service=github)](https://app.codecov.io/github/diegoglezsu/py-bopa)
-[![PyPI version](https://img.shields.io/pypi/v/py-bopa.svg)](https://pypi.org/project/py-bopa/)
-[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://diegoglezsu.github.io/py-bopa/)
+[![Tests](https://github.com/diegoglezsu/bopa-fetcher/actions/workflows/tests.yml/badge.svg)](https://github.com/diegoglezsu/bopa-fetcher/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/diegoglezsu/bopa-fetcher/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/diegoglezsu/bopa-fetcher/actions/workflows/github-code-scanning/codeql)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegoglezsu_bopa-fetcher&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegoglezsu_bopa-fetcher)
+[![Codecov status](https://codecov.io/github/diegoglezsu/bopa-fetcher/badge.svg?branch=main&service=github)](https://app.codecov.io/github/diegoglezsu/bopa-fetcher)
+[![PyPI version](https://img.shields.io/pypi/v/bopa-fetcher.svg)](https://pypi.org/project/bopa-fetcher/)
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://diegoglezsu.github.io/bopa-fetcher/)
 [![DOI](https://zenodo.org/badge/1193786609.svg)]()
 
 ## Description
 
-![py-bopa Logo](https://raw.githubusercontent.com/diegoglezsu/py-bopa/main/docs/assets/logo.png)
+![bopa-fetcher Logo](https://raw.githubusercontent.com/diegoglezsu/bopa-fetcher/main/docs/assets/logo.png)
 
-**py-bopa** is a Python library for programmatic access to the official bulletins of the Principality of Asturias (BOPA). It allows users to search, retrieve, and analyze bulletin summaries and individual articles in a structured manner.
+**bopa-fetcher** is a Python library for programmatic access to the official bulletins of the Principality of Asturias (BOPA). It allows users to search, retrieve, and analyze bulletin summaries and individual articles in a structured manner.
 
-## Why py-bopa?
+## Why bopa-fetcher?
 
-[BOPA (Boletín Oficial del Principado de Asturias)](https://miprincipado.asturias.es/bopa) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **py-bopa** provides a simple, programmatic interface to:
+[BOPA (Boletín Oficial del Principado de Asturias)](https://miprincipado.asturias.es/bopa) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **bopa-fetcher** provides a simple, programmatic interface to:
 
 - Retrieve bulletin summaries and articles as structured Python objects.
 - Search across date ranges for both bulletins and individual articles.
@@ -40,7 +40,7 @@
 Install from PyPI:
 
 ```bash
-pip install py-bopa
+pip install bopa-fetcher
 ```
 
 ### Basic Usage Example

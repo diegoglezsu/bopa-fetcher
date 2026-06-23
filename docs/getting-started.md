@@ -10,7 +10,7 @@
 Install from PyPI:
 
 ```bash
-pip install py-bopa
+pip install bopa-fetcher
 ```
 
 Or install from source with development dependencies:
@@ -61,8 +61,8 @@ for b in bulletins:
 
 ### Run Example Scripts
 
-The repository includes runnable scripts with examples. These can be found in the [`scripts`](https://github.com/diegoglezsu/py-bopa/tree/main/scripts) directory:
+The repository includes runnable scripts with examples. These can be found in the [`scripts`](https://github.com/diegoglezsu/bopa-fetcher/tree/main/scripts) directory:
 
 ```bash
-python scripts/run_py-bopa.py
+python scripts/run_bopa-fetcher.py
 ```

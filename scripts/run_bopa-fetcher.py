@@ -1,4 +1,4 @@
-"""Small script to query BOPA data using the py-bopa library."""
+"""Small script to query BOPA data using the bopa-fetcher library."""
 
 from bopa.api import Client
 

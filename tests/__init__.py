@@ -1,1 +1,1 @@
-"""Unit test package for pybopa."""
+"""Unit test package for bopa-fetcher."""

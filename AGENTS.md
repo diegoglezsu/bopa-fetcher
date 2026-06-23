@@ -1,4 +1,4 @@
-# py-bopa — AGENTS.md
+# bopa-fetcher — AGENTS.md
 
 ## Commands
 
@@ -12,12 +12,12 @@ isort src/bopa tests            # sort imports
 flake8 src/bopa tests           # lint
 mypy src/bopa                   # typecheck (strict: untyped defs = error, python 3.9)
 mkdocs build / mkdocs serve     # docs
-python scripts/run_py-bopa.py   # run example script
+python scripts/run_bopa-fetcher.py   # run example script
 ```
 
 ## Architecture
 
-`src/bopa/` is a single-package layout (setuptools `find` in `src/`). **Import as `bopa`** (PyPI package name is `py-bopa`).
+`src/bopa/` is a single-package layout (setuptools `find` in `src/`). **Import as `bopa`** (PyPI package name is `bopa-fetcher`).
 
 ```
 api/__init__.py     → exports Client
