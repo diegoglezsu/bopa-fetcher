@@ -11,7 +11,7 @@ def main() -> int:
     client = Client()
 
 
-    print(f"\n=== get_bulletins(date_from='{date_from}', date_to='{date_to}') ===")
+    print(f"\n=== get_bulletins(date_from='{date_from}', date_to='{date_to}', text_contains='Junta General') ===")
     bulletins = client.get_bulletins(date_from, date_to, text_contains="Junta General")
     print(f"  bulletins count: {len(bulletins)}")
     print(f"  bulletins: {[b.to_dict() for b in bulletins]}")
@@ -44,7 +44,7 @@ def main() -> int:
     for date, bs in grouped_by_date.items():
         print(f"  {date}: {len(bs)} boletín(es)")
     '''
-    print(f"\n=== get_articles(date_from='{date_from}', date_to='{date_to}') ===")
+    print(f"\n=== get_articles(date_from='{date_from}', date_to='{date_to}', text_contains='Junta General') ===")
     articles = client.get_articles(date_from, date_to, text_contains="Junta General")
     print(f"  articles count: {len(articles)}")
     grouped_by_date = {}
