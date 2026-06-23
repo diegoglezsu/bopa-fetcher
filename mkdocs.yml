@@ -1,7 +1,7 @@
 site_name: bopa-fetcher
 site_description: Documentation for bopa-fetcher
 site_url: https://diegoglezsu.github.io/bopa-fetcher/
-repo_url: https://github.com/diegoglezsu/bopa-fetcher
+repo_url: https://github.com/diegoglezsu/bopa-fetcher/
 repo_name: diegoglezsu/bopa-fetcher
 
 theme:
