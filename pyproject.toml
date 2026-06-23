@@ -15,7 +15,6 @@ authors = [
 ]
 maintainers = [
   {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
-  {name = "Noelia Rico", email = "noeliarico@uniovi.es"}
 ]
 keywords = ["official gazette", "asturian legislation", "data analysis", "policy research", "legal analytics"]
 classifiers = [
