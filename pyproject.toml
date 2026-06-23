@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bopa-fetcher"
 version = "0.1.0"
-description = "A Python library for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias) webpage."
+description = "A Python library for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)."
 readme = "README.md"
 requires-python = ">=3.7"
 license-files = ["LICENSE"]
@@ -16,7 +16,7 @@ authors = [
 maintainers = [
   {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
 ]
-keywords = ["official gazette", "asturian legislation", "data analysis", "policy research", "legal analytics"]
+keywords = ["official gazette", "asturian legislation", "data analysis", "policy research", "legal analytics", "python"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
