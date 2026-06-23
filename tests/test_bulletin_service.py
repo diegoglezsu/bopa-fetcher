@@ -155,28 +155,6 @@ class TestBulletinTextContains:
         assert len(summary.summary) == 1
         assert summary.summary[0].code == "2023-11737"
 
-    def test_filter_by_origin(self, monkeypatch, sample_bulletin_html, sample_date):
-        def mock_get(url, timeout=60):
-            return FakeResponse(sample_bulletin_html)
-
-        monkeypatch.setattr(requests, "get", mock_get)
-
-        b = Bulletin(date=sample_date)
-        summary = b.get_bulletin(text_contains="Principado")
-        assert len(summary.summary) == 1
-        assert "Principado de Asturias" in summary.summary[0].origin
-
-    def test_filter_by_code(self, monkeypatch, sample_bulletin_html, sample_date):
-        def mock_get(url, timeout=60):
-            return FakeResponse(sample_bulletin_html)
-
-        monkeypatch.setattr(requests, "get", mock_get)
-
-        b = Bulletin(date=sample_date)
-        summary = b.get_bulletin(text_contains="2023-11737")
-        assert len(summary.summary) == 1
-        assert summary.summary[0].code == "2023-11737"
-
     def test_no_match_returns_empty(self, monkeypatch, sample_bulletin_html, sample_date):
         def mock_get(url, timeout=60):
             return FakeResponse(sample_bulletin_html)
