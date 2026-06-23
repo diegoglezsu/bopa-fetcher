@@ -74,7 +74,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 For any questions or suggestions, feel free to reach out to the corresponding author:
 
 - **Author**: Diego González Suárez, Noelia Rico Pachón
-- **Email**: <gonzalezsdiego@uniovi.es>,<noeliarico@uniovi.es>
+- **Email**: <gonzalezsdiego@uniovi.es>, <noeliarico@uniovi.es>
 
 ## Acknowledgements
 
