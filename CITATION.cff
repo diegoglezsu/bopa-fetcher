@@ -1,12 +1,15 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
-title: "bopa-fetcher: A Python library for fetching structured information from BOPA (Boletín Oficial de la Principidad de Asturias)"
+title: "bopa-fetcher: A Python library for fetching structured information from BOPA (Boletín Oficial de la Principado de Asturias)"
 type: software
 
 authors:
   - family-names: "González-Suárez"
     given-names: "Diego"
     orcid: "https://orcid.org/0009-0004-6388-5333"
+  - family-names: "Rico"
+    given-names: "Noelia"
+    orcid: "https://orcid.org/0000-0002-6169-4523"
 
 abstract: >
   Boletin Oficial de la Principidad de Asturias (BOPA) is the official gazette of the Principality of Asturias, Spain. It publishes laws, regulations, and other official announcements. This Python library provides a convenient way to fetch structured information from BOPA, enabling data analysis and policy research in the context of Asturian legislation.
@@ -18,6 +21,11 @@ keywords:
   - Policy Research
   - Legal Analytics
   - Python
+
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20813486"
+    description: "DOI for bulletin-fetcher software"
 
 license: MIT
 repository-code: "https://github.com/diegoglezsu/bopa-fetcher"

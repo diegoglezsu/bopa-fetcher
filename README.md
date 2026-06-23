@@ -6,7 +6,7 @@
 [![Codecov status](https://codecov.io/github/diegoglezsu/bopa-fetcher/badge.svg?branch=main&service=github)](https://app.codecov.io/github/diegoglezsu/bopa-fetcher)
 [![PyPI version](https://img.shields.io/pypi/v/bopa-fetcher.svg)](https://pypi.org/project/bopa-fetcher/)
 [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://diegoglezsu.github.io/bopa-fetcher/)
-[![DOI](https://zenodo.org/badge/1193786609.svg)]()
+[![DOI](https://zenodo.org/badge/1193786609.svg)](https://doi.org/10.5281/zenodo.20813486)
 
 ## Description
 
