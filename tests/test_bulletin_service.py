@@ -143,4 +143,105 @@ class TestBulletinGetBulletin:
         assert len(summary.summary) == 0
 
 
+class TestBulletinTextContains:
+    def test_filter_by_description(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains="Descripción")
+        assert len(summary.summary) == 1
+        assert summary.summary[0].code == "2023-11737"
+
+    def test_filter_by_origin(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains="Principado")
+        assert len(summary.summary) == 1
+        assert "Principado de Asturias" in summary.summary[0].origin
+
+    def test_filter_by_code(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains="2023-11737")
+        assert len(summary.summary) == 1
+        assert summary.summary[0].code == "2023-11737"
+
+    def test_no_match_returns_empty(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains="XYZZZZ")
+        assert len(summary.summary) == 0
+
+    def test_case_insensitive(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains="descripción")
+        assert len(summary.summary) == 1
+
+    def test_none_returns_all(self, monkeypatch, sample_bulletin_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        summary = b.get_bulletin(text_contains=None)
+        assert len(summary.summary) == 2
+
+    def test_preserves_caching_without_filter(
+        self, monkeypatch, sample_bulletin_html, sample_date
+    ):
+        call_count = 0
+
+        def mock_get(url, timeout=60):
+            nonlocal call_count
+            call_count += 1
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        r1 = b.get_bulletin()
+        r2 = b.get_bulletin(text_contains=None)
+        assert r1 is r2
+        assert call_count == 1
+
+    def test_bypasses_cache_with_filter(
+        self, monkeypatch, sample_bulletin_html, sample_date
+    ):
+        call_count = 0
+
+        def mock_get(url, timeout=60):
+            nonlocal call_count
+            call_count += 1
+            return FakeResponse(sample_bulletin_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        b = Bulletin(date=sample_date)
+        r1 = b.get_bulletin()
+        r2 = b.get_bulletin(text_contains="Descripción")
+        assert r1 is not r2
+        assert call_count == 2
+
+
 import pytest

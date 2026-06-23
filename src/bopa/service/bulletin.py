@@ -71,7 +71,7 @@ class Bulletin:
 
         raise Exception(f"Could not find div with id='{BOPA_BULLETIN_ID}'.")
 
-    def _parse_summary(self):
+    def _parse_summary(self, text_contains=None):
         """Parse the bulletin HTML into a structured summary.
 
         Iterates over the child elements of the bulletin div, tracking
@@ -79,8 +79,13 @@ class Bulletin:
         (p.subAuthor), then extracts each disposition entry from <dl><dt>
         elements.
 
+        Args:
+            text_contains: Optional string to filter entries by.
+                Only entries whose description contain
+                this substring (case-insensitive) are returned.
+
         Returns:
-            BulletinSummary with all entries parsed.
+            BulletinSummary with all (or filtered) entries parsed.
         """
 
         boletin_div = self._get_bulletin_html()
@@ -139,17 +144,36 @@ class Bulletin:
                         )
                     )
 
+        if text_contains:
+            text_contains_lower = text_contains.lower()
+            entries = [
+                e
+                for e in entries
+                if text_contains_lower in e.description.lower()
+                or text_contains_lower in e.origin.lower()
+                or text_contains_lower in e.code.lower()
+            ]
+
         return BulletinSummary(num=self.num, date=self.date, summary=entries)
 
-    def get_bulletin(self):
+    def get_bulletin(self, text_contains=None):
         """Return the structured bulletin summary.
 
-        Results are cached after the first call.
+        Results are cached after the first call when ``text_contains``
+        is not provided. When filtering is requested the summary is
+        always freshly parsed.
+
+        Args:
+            text_contains: Optional string to filter entries by.
+                Only entries whose description, origin, or code contain
+                this substring (case-insensitive) are returned.
 
         Returns:
             BulletinSummary for the configured date.
         """
 
+        if text_contains is not None:
+            return self._parse_summary(text_contains)
         if self.summary is None:
             self.summary = self._parse_summary()
         return self.summary
