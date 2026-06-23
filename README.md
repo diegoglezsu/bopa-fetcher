@@ -50,9 +50,14 @@ Fetch acts for a publication date:
 ```python
 from bopa.api import Client
 client = Client()
+
 # Get the bulletin summary for 29/12/2023
 bulletin = client.get_bulletin(date="29/12/2023")
 print(bulletin.to_dict())
+
+# get specific article by code
+article = client.get_article(cod="2023-11737", date="29/12/2023")
+print(f"  article: {article.to_dict()}")
 
 ```
 
