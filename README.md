@@ -16,7 +16,7 @@
 
 ## Why py-bopa?
 
-BOPA (Boletín Oficial del Principado de Asturias) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **py-bopa** provides a simple, programmatic interface to:
+[BOPA (Boletín Oficial del Principado de Asturias)](https://miprincipado.asturias.es/bopa) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **py-bopa** provides a simple, programmatic interface to:
 
 - Retrieve bulletin summaries and articles as structured Python objects.
 - Search across date ranges for both bulletins and individual articles.
