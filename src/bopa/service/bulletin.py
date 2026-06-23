@@ -71,7 +71,7 @@ class Bulletin:
 
         raise Exception(f"Could not find div with id='{BOPA_BULLETIN_ID}'.")
 
-    def _parse_summary(self, text_contains=None):
+    def _parse_summary(self, text_contains=None, origin_contains=None):
         """Parse the bulletin HTML into a structured summary.
 
         Iterates over the child elements of the bulletin div, tracking
@@ -81,8 +81,11 @@ class Bulletin:
 
         Args:
             text_contains: Optional string to filter entries by.
-                Only entries whose description contain
+                Only entries whose description, origin, or code contain
                 this substring (case-insensitive) are returned.
+            origin_contains: Optional string to filter entries by origin.
+                Only entries whose origin contains this substring
+                (case-insensitive) are returned.
 
         Returns:
             BulletinSummary with all (or filtered) entries parsed.
@@ -150,30 +153,37 @@ class Bulletin:
                 e
                 for e in entries
                 if text_contains_lower in e.description.lower()
-                or text_contains_lower in e.origin.lower()
-                or text_contains_lower in e.code.lower()
             ]
+
+        if origin_contains:
+            origin_contains_lower = origin_contains.lower()
+            entries = [e for e in entries if origin_contains_lower in e.origin.lower()]
 
         return BulletinSummary(num=self.num, date=self.date, summary=entries)
 
-    def get_bulletin(self, text_contains=None):
+    def get_bulletin(self, text_contains=None, origin_contains=None):
         """Return the structured bulletin summary.
 
-        Results are cached after the first call when ``text_contains``
-        is not provided. When filtering is requested the summary is
-        always freshly parsed.
+        Results are cached after the first call when no filter is
+        provided. When filtering is requested the summary is always
+        freshly parsed.
 
         Args:
             text_contains: Optional string to filter entries by.
                 Only entries whose description, origin, or code contain
                 this substring (case-insensitive) are returned.
+            origin_contains: Optional string to filter entries by origin.
+                Only entries whose origin contains this substring
+                (case-insensitive) are returned.
 
         Returns:
             BulletinSummary for the configured date.
         """
 
-        if text_contains is not None:
-            return self._parse_summary(text_contains)
+        if text_contains is not None or origin_contains is not None:
+            return self._parse_summary(
+                text_contains=text_contains, origin_contains=origin_contains
+            )
         if self.summary is None:
             self.summary = self._parse_summary()
         return self.summary

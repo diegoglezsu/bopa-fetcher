@@ -10,14 +10,17 @@ def main() -> int:
 
     client = Client()
 
+    print(f"\n=== get_bulletins(date_from='{date_from}', origin_contains='Universidad de Oviedo') ===")
+    bulletin = client.get_bulletin(date_from, origin_contains="Universidad de Oviedo")
+    print(f"  bulletin: {bulletin.to_dict()}")
 
+    
     print(f"\n=== get_bulletins(date_from='{date_from}', date_to='{date_to}', text_contains='Junta General') ===")
     bulletins = client.get_bulletins(date_from, date_to, text_contains="Junta General")
     print(f"  bulletins count: {len(bulletins)}")
     print(f"  bulletins: {[b.to_dict() for b in bulletins]}")
-
+    
     '''
-
     print(f"\n=== get_bulletin(date='29/12/2023') === (suplements)")
     boletin = client.get_bulletin(date='29/12/2023')
     to_json = boletin.to_dict()

@@ -11,13 +11,17 @@ class Client:
     """A client class to interact with the BOPA API and fetch bulletins and articles."""
 
     def get_bulletin(
-        self, date: str, text_contains: str | None = None
+        self,
+        date: str,
+        text_contains: str | None = None,
+        origin_contains: str | None = None,
     ) -> BulletinSummary:
         """Fetch the bulletin summary for a specific date.
 
         Args:
             date: Date in dd/mm/YYYY format (e.g. "29/12/2023").
             text_contains: Optional string to filter entries by.
+            origin_contains: Optional string to filter entries by origin.
 
         Returns:
             BulletinSummary corresponding to the given date.
@@ -29,10 +33,16 @@ class Client:
         if datetime.strptime(date, "%d/%m/%Y") < DATE_MIN:
             raise ValueError(f"date must be on or after {DATE_MIN}.")
 
-        return Bulletin(date=date).get_bulletin(text_contains=text_contains)
+        return Bulletin(date=date).get_bulletin(
+            text_contains=text_contains, origin_contains=origin_contains
+        )
 
     def get_bulletins(
-        self, date_from: str, date_to: str, text_contains: str | None = None
+        self,
+        date_from: str,
+        date_to: str,
+        text_contains: str | None = None,
+        origin_contains: str | None = None,
     ) -> list[BulletinSummary]:
         """Fetch all bulletin summaries in a date range.
 
@@ -40,6 +50,7 @@ class Client:
             date_from: Start date in dd/mm/YYYY format.
             date_to: End date in dd/mm/YYYY format.
             text_contains: Optional string to filter entries by.
+            origin_contains: Optional string to filter entries by origin.
 
         Returns:
             List of BulletinSummary objects for each weekday in the range.
@@ -59,7 +70,11 @@ class Client:
             fecha_str = current_date.strftime("%d/%m/%Y")
             try:
                 summaries.append(
-                    self.get_bulletin(fecha_str, text_contains=text_contains)
+                    self.get_bulletin(
+                        fecha_str,
+                        text_contains=text_contains,
+                        origin_contains=origin_contains,
+                    )
                 )
             except Exception:
                 pass
@@ -67,7 +82,11 @@ class Client:
 
         return summaries
 
-    def get_article(self, cod: str, date: str) -> BulletinArticle:
+    def get_article(
+        self,
+        cod: str,
+        date: str,
+    ) -> BulletinArticle:
         """Fetch a specific article by code and date.
 
         Args:
@@ -87,7 +106,11 @@ class Client:
         return Article(cod=cod, date=date).get_article()
 
     def get_articles(
-        self, date_from: str, date_to: str, text_contains: str | None = None
+        self,
+        date_from: str,
+        date_to: str,
+        text_contains: str | None = None,
+        origin_contains: str | None = None,
     ) -> list[BulletinArticle]:
         """Fetch all articles in a date range.
 
@@ -98,6 +121,8 @@ class Client:
             date_from: Start date in dd/mm/YYYY format.
             date_to: End date in dd/mm/YYYY format.
             text_contains: Optional string to filter bulletin entries by.
+            origin_contains: Optional string to filter bulletin entries
+                by origin.
 
         Returns:
             List of BulletinArticle objects in the range.
@@ -116,7 +141,11 @@ class Client:
         while current_date <= end_date:
             fecha_str = current_date.strftime("%d/%m/%Y")
             try:
-                bulletin = self.get_bulletin(fecha_str, text_contains=text_contains)
+                bulletin = self.get_bulletin(
+                    fecha_str,
+                    text_contains=text_contains,
+                    origin_contains=origin_contains,
+                )
                 articles.extend(
                     Article(cod=cod, num=bulletin.num, date=bulletin.date).get_article()
                     for cod in bulletin.codes

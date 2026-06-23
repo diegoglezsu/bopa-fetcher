@@ -133,3 +133,65 @@ class TestArticleGetArticle:
         a = Article(cod="2023-11737", date=sample_date)
         with pytest.raises(Exception, match="has no body content"):
             a.get_article()
+
+
+class TestArticleOriginContains:
+    def test_origin_matches(self, monkeypatch, sample_article_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_article_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        a = Article(cod="2023-11737", num="123", date=sample_date)
+        article = a.get_article(origin_contains="Principado")
+        assert "Principado de Asturias" in article.origin
+
+    def test_origin_does_not_match_raises(
+        self, monkeypatch, sample_article_html, sample_date
+    ):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_article_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        a = Article(cod="2023-11737", num="123", date=sample_date)
+        with pytest.raises(Exception, match="origin does not match"):
+            a.get_article(origin_contains="XYZZZZ")
+
+    def test_case_insensitive(self, monkeypatch, sample_article_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_article_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        a = Article(cod="2023-11737", num="123", date=sample_date)
+        article = a.get_article(origin_contains="principado")
+        assert "Principado de Asturias" in article.origin
+
+    def test_none_returns_article(self, monkeypatch, sample_article_html, sample_date):
+        def mock_get(url, timeout=60):
+            return FakeResponse(sample_article_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        a = Article(cod="2023-11737", num="123", date=sample_date)
+        article = a.get_article(origin_contains=None)
+        assert article.code == "2023-11737"
+
+    def test_caching_bypassed_with_filter(
+        self, monkeypatch, sample_article_html, sample_date
+    ):
+        call_count = 0
+
+        def mock_get(url, timeout=60):
+            nonlocal call_count
+            call_count += 1
+            return FakeResponse(sample_article_html)
+
+        monkeypatch.setattr(requests, "get", mock_get)
+
+        a = Article(cod="2023-11737", num="123", date=sample_date)
+        r1 = a.get_article()
+        r2 = a.get_article(origin_contains="Principado")
+        assert r1 is not r2
+        assert call_count == 2

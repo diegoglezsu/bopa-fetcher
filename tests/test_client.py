@@ -130,7 +130,7 @@ class TestClientGetArticle:
 
         monkeypatch.setattr(ArticleService, "__init__", mock_article_init)
         monkeypatch.setattr(
-            ArticleService, "get_article", lambda self: expected
+            ArticleService, "get_article", lambda self, **kwargs: expected
         )
 
         client = Client()
@@ -172,7 +172,7 @@ class TestClientGetArticles:
 
         monkeypatch.setattr(ArticleService, "__init__", mock_article_init)
 
-        def mock_get_article(self):
+        def mock_get_article(self, **kwargs):
             return BulletinArticle(
                 code=self.cod,
                 num=self.num,
@@ -223,7 +223,7 @@ class TestClientGetArticles:
         monkeypatch.setattr(
             ArticleService,
             "get_article",
-            lambda self: BulletinArticle(
+            lambda self, **kwargs: BulletinArticle(
                 code=self.cod,
                 num=self.num,
                 date=sample_datetime,
@@ -267,7 +267,7 @@ class TestClientGetArticles:
 
         monkeypatch.setattr(ArticleService, "__init__", mock_article_init)
 
-        def mock_get_article(self):
+        def mock_get_article(self, **kwargs):
             return BulletinArticle(
                 code=self.cod,
                 num=self.num,
@@ -282,5 +282,54 @@ class TestClientGetArticles:
 
         client = Client()
         articles = client.get_articles("29/12/2023", "29/12/2023", text_contains="Alpha")
+        assert len(articles) == 1
+        assert articles[0].code == "2023-00001"
+
+    def test_filters_by_origin_contains(self, monkeypatch, sample_datetime):
+        def mock_bulletin_init(self, date):
+            self.date = sample_datetime
+            self.num = "123"
+            self.sumario = None
+            self._date_str = date
+
+        monkeypatch.setattr(BulletinService, "__init__", mock_bulletin_init)
+
+        def mock_get_bulletin(self, **kwargs):
+            oc = kwargs.get("origin_contains")
+            entries = [
+                BulletinSummaryEntry("2023-00001", "Part A", "Alpha", "", ""),
+                BulletinSummaryEntry("2023-00002", "Part B", "Beta", "", ""),
+            ]
+            if oc:
+                entries = [e for e in entries if oc.lower() in e.origin.lower()]
+            return BulletinSummary(num="123", date=sample_datetime, summary=entries)
+
+        monkeypatch.setattr(BulletinService, "get_bulletin", mock_get_bulletin)
+
+        def mock_article_init(self, cod, num, date):
+            self.cod = cod
+            self.num = num
+            self.date = sample_datetime
+            self.article = None
+
+        monkeypatch.setattr(ArticleService, "__init__", mock_article_init)
+
+        def mock_get_article(self, **kwargs):
+            return BulletinArticle(
+                code=self.cod,
+                num=self.num,
+                date=sample_datetime,
+                origin="Part",
+                content=[f"Content of {self.cod}"],
+                link_html="",
+                link_pdf="",
+            )
+
+        monkeypatch.setattr(ArticleService, "get_article", mock_get_article)
+
+        client = Client()
+        articles = client.get_articles(
+            "29/12/2023", "29/12/2023", origin_contains="Part A"
+        )
         assert len(articles) == 1
         assert articles[0].code == "2023-00001"

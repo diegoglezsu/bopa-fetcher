@@ -16,7 +16,6 @@ BOPA (Boletín Oficial del Principado de Asturias) is the official gazette of th
 - Export data to dictionaries for integration with data analysis pipelines (pandas, NumPy, etc.).
 - Avoid manual scraping by handling HTML parsing and URL construction internally.
 
-> [!WARNING]
 > BOPA bulletins are available in the portal from **01/01/2000** onwards. Requests for earlier dates will return no data.
 
 ## Main features
