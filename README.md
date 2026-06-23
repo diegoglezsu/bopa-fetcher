@@ -12,15 +12,26 @@
 
 ![py-bopa Logo](https://raw.githubusercontent.com/diegoglezsu/py-bopa/main/docs/assets/logo.png)
 
-**py-bopa** is a Python library for programmatic access to
+**py-bopa** is a Python library for programmatic access to the official bulletins of the Principality of Asturias (BOPA). It allows users to search, retrieve, and analyze bulletin summaries and individual articles in a structured manner.
 
 ## Why py-bopa?
 
+BOPA (Boletín Oficial del Principado de Asturias) is the official gazette of the region of Asturias, Spain. Researchers, legal professionals, and journalists often need to search, download, and analyze large volumes of legislative and administrative documents. **py-bopa** provides a simple, programmatic interface to:
+
+- Retrieve bulletin summaries and articles as structured Python objects.
+- Search across date ranges for both bulletins and individual articles.
+- Export data to dictionaries for integration with data analysis pipelines (pandas, NumPy, etc.).
+- Avoid manual scraping by handling HTML parsing and URL construction internally.
+
+> [!WARNING]
+> BOPA bulletins are available in the portal from **01/01/2000** onwards. Requests for earlier dates will return no data.
+
 ## Main features
 
-## Use Cases
-
-py-bopa can be used for:
+- **Legal research**: Download and analyze official bulletins for a specific time period to track legislative changes.
+- **Data journalism**: Collect structured data from BOPA for investigative reporting on regional governance.
+- **Policy analysis**: Extract and categorize dispositions by origin (council, council board, presidency, etc.) for quantitative studies.
+- **Archive building**: Build reproducible datasets of Asturian official publications for academic research.
 
 ## Quick Start
 
@@ -37,12 +48,17 @@ pip install py-bopa
 Fetch acts for a publication date:
 
 ```python
+from bopa.api import Client
+client = Client()
+# Get the bulletin summary for 29/12/2023
+bulletin = client.get_bulletin(date="29/12/2023")
+print(bulletin.to_dict())
 
 ```
 
 ### Use Case Examples
 
-The repository includes runnable scripts and notebooks with examples and use cases of the library. These scripts can be found in the `scripts/` directory.
+The repository includes runnable scripts with examples and use cases of the library. These scripts can be found in the `scripts/` directory.
 
 ## License
 
