@@ -18,8 +18,8 @@ class TestClientGetBulletin:
                     code="2023-11737",
                     origin="Part",
                     description="Desc",
-                    link_html="http://html",
-                    link_pdf="http://pdf",
+                    link_html="https://html",
+                    link_pdf="https://pdf",
                 )
             ],
         )
@@ -115,8 +115,8 @@ class TestClientGetArticle:
             date=sample_datetime,
             origin="Part",
             content=["Body"],
-            link_html="http://html",
-            link_pdf="http://pdf",
+            link_html="https://html",
+            link_pdf="https://pdf",
         )
 
         calls = []

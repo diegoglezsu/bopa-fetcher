@@ -9,30 +9,30 @@ class TestBulletinSummaryEntry:
             code="2023-11737",
             origin="Part / Chapter / Topic",
             description="Test description",
-            link_html="http://example.com/html",
-            link_pdf="http://example.com/pdf",
+            link_html="https://example.com/html",
+            link_pdf="https://example.com/pdf",
         )
         assert entry.code == "2023-11737"
         assert entry.origin == "Part / Chapter / Topic"
         assert entry.description == "Test description"
-        assert entry.link_html == "http://example.com/html"
-        assert entry.link_pdf == "http://example.com/pdf"
+        assert entry.link_html == "https://example.com/html"
+        assert entry.link_pdf == "https://example.com/pdf"
 
     def test_to_dict(self):
         entry = BulletinSummaryEntry(
             code="2023-11737",
             origin="Part",
             description="Desc",
-            link_html="http://html",
-            link_pdf="http://pdf",
+            link_html="https://html",
+            link_pdf="https://pdf",
         )
         d = entry.to_dict()
         assert d == {
             "code": "2023-11737",
             "origin": "Part",
             "description": "Desc",
-            "link_html": "http://html",
-            "link_pdf": "http://pdf",
+            "link_html": "https://html",
+            "link_pdf": "https://pdf",
         }
 
 
@@ -42,8 +42,8 @@ class TestBulletinSummary:
             code="2023-11737",
             origin="Part",
             description="Desc",
-            link_html="http://html",
-            link_pdf="http://pdf",
+            link_html="https://html",
+            link_pdf="https://pdf",
         )
         summary = BulletinSummary(
             num="123", date=sample_datetime, summary=[entry]
@@ -90,8 +90,8 @@ class TestBulletinArticle:
             date=sample_datetime,
             origin="Part / Chapter",
             content=["Line 1", "Line 2"],
-            link_html="http://html",
-            link_pdf="http://pdf",
+            link_html="https://html",
+            link_pdf="https://pdf",
         )
         assert article.code == "2023-11737"
         assert article.num == "123"
@@ -106,8 +106,8 @@ class TestBulletinArticle:
             date=sample_datetime,
             origin="Part",
             content=["Body"],
-            link_html="http://html",
-            link_pdf="http://pdf",
+            link_html="https://html",
+            link_pdf="https://pdf",
         )
         d = article.to_dict()
         assert d == {
@@ -116,6 +116,6 @@ class TestBulletinArticle:
             "date": "29/12/2023",
             "origin": "Part",
             "content": ["Body"],
-            "link_html": "http://html",
-            "link_pdf": "http://pdf",
+            "link_html": "https://html",
+            "link_pdf": "https://pdf",
         }
