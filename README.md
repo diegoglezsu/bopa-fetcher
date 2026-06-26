@@ -78,4 +78,8 @@ For any questions or suggestions, feel free to reach out to the corresponding au
 
 ## Acknowledgements
 
+The authors gratefully acknowledge the financial support of the Asturian Agency for Science, Business Competitiveness and Innovation (SEKUENS) under Grant Agreement No. SEK-25-GRU-GIC-24-018. Noelia Rico and Irene Díaz also acknowledge support from the European project SCIMIN-CRM (Grant Agreement No. 101177746) and the funding from the Spanish Ministry of Science and Innovation through project PID2022-139886NB-I00.
+
 ## Citation
+
+If you use `bopa-fetcher` in your research, please cite it. Citation information is available in the [`CITATION.cff`](https://github.com/diegoglezsu/bopa-fetcher/blob/main/CITATION.cff) file.

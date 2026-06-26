@@ -7,7 +7,7 @@ to its bulletins and articles via web scraping.
 
 __author__ = ["Diego González Suárez", "Noelia Rico"]
 __email__ = ["gonzalezsdiego@uniovi.es", "noeliarico@uniovi.es"]
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 from . import service
 from . import api

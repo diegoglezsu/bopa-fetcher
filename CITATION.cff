@@ -29,10 +29,10 @@ keywords:
 identifiers:
   - type: doi
     value: "10.5281/zenodo.20813486"
-    description: "DOI for bulletin-fetcher software"
+    description: "DOI for bopa-fetcher software"
 
 license: MIT
 repository-code: "https://github.com/diegoglezsu/bopa-fetcher"
 url: "https://diegoglezsu.github.io/bopa-fetcher/"
-version: "0.1.4"
-date-released: "2026-05-23"
+version: "0.1.5"
+date-released: "2026-06-26"
