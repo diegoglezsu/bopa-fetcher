@@ -27,7 +27,7 @@ classifiers = [
 ]
 license = "MIT"
 dependencies = [
-  "bs4==0.0.2",
+  "beautifulsoup4>=4.12.2",
   "matplotlib>=3.9.0",
   "numpy>=2.1.0",
   "pandas>=2.2.2",
