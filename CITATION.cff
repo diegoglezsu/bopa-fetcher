@@ -34,5 +34,5 @@ identifiers:
 license: MIT
 repository-code: "https://github.com/diegoglezsu/bopa-fetcher"
 url: "https://diegoglezsu.github.io/bopa-fetcher/"
-version: "0.1.5"
-date-released: "2026-06-26"
+version: "0.1.6"
+date-released: "2026-06-29"
