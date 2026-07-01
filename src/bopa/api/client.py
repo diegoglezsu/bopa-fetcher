@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from bopa.constants import DATE_MIN
-from bopa.service.links import build_ancient_url, build_date_min_error
+from bopa.service.links import build_date_min_error
 
 from ..models import BulletinArticle, BulletinSummary
 from ..service.article import Article
