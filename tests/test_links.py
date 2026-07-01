@@ -1,6 +1,13 @@
 from datetime import datetime
 
-from bopa.service.links import build_link_html, build_link_pdf, build_origin
+from bopa.constants import BOPA_URL
+from bopa.service.links import (
+    build_ancient_url,
+    build_date_min_error,
+    build_link_html,
+    build_link_pdf,
+    build_origin,
+)
 
 
 def test_build_link_html(sample_datetime):
@@ -34,3 +41,26 @@ def test_build_origin_all_empty():
 def test_build_origin_no_args():
     result = build_origin()
     assert result == ""
+
+
+def test_build_date_min_error_weekday():
+    date_obj = datetime(1999, 12, 31)
+    msg = build_date_min_error(date_obj)
+    assert "date must be on or after 2000-01-01 00:00:00 to get structured information." in msg
+    assert (
+        "Information can be found here:"
+        f" {BOPA_URL}/1999/12/31/19991231.pdf" in msg
+    )
+
+
+def test_build_date_min_error_sunday():
+    date_obj = datetime(2000, 1, 2)
+    msg = build_date_min_error(date_obj)
+    assert "date must be on or after 2000-01-01 00:00:00 to get structured information." in msg
+    assert "Information can be found here:" not in msg
+
+
+def test_build_ancient_url():
+    date_obj = datetime(1999, 12, 31)
+    url = build_ancient_url(date_obj)
+    assert url == f"{BOPA_URL}/1999/12/31/19991231.pdf"

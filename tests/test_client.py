@@ -333,3 +333,59 @@ class TestClientGetArticles:
         )
         assert len(articles) == 1
         assert articles[0].code == "2023-00001"
+
+
+class TestClientValidation:
+    def test_get_bulletin_empty_date(self):
+        client = Client()
+        with pytest.raises(ValueError, match="The 'date' parameter is required."):
+            client.get_bulletin("")
+
+    def test_get_bulletin_none_date(self):
+        client = Client()
+        with pytest.raises(ValueError, match="The 'date' parameter is required."):
+            client.get_bulletin(None)
+
+    def test_get_bulletin_date_before_min(self):
+        client = Client()
+        with pytest.raises(ValueError, match="date must be on or after"):
+            client.get_bulletin("31/12/1999")
+
+    def test_get_bulletins_reversed_dates(self):
+        client = Client()
+        with pytest.raises(
+            ValueError, match="date_from must be earlier than or equal to date_to."
+        ):
+            client.get_bulletins("03/12/2023", "01/12/2023")
+
+    def test_get_bulletins_date_before_min(self):
+        client = Client()
+        with pytest.raises(ValueError, match="date_from must be on or after"):
+            client.get_bulletins("31/12/1999", "01/01/2000")
+
+    def test_get_article_missing_cod(self):
+        client = Client()
+        with pytest.raises(ValueError, match="Both 'cod' and 'date' must be provided."):
+            client.get_article("", "29/12/2023")
+
+    def test_get_article_missing_date(self):
+        client = Client()
+        with pytest.raises(ValueError, match="Both 'cod' and 'date' must be provided."):
+            client.get_article("2023-11737", "")
+
+    def test_get_article_date_before_min(self):
+        client = Client()
+        with pytest.raises(ValueError, match="date must be on or after"):
+            client.get_article("2023-11737", "31/12/1999")
+
+    def test_get_articles_reversed_dates(self):
+        client = Client()
+        with pytest.raises(
+            ValueError, match="date_from must be earlier than or equal to date_to."
+        ):
+            client.get_articles("03/12/2023", "01/12/2023")
+
+    def test_get_articles_date_before_min(self):
+        client = Client()
+        with pytest.raises(ValueError, match="date_from must be on or after"):
+            client.get_articles("31/12/1999", "01/01/2000")

@@ -54,17 +54,3 @@ def sample_article_html():
     </div>
     """
 
-
-@pytest.fixture
-def minimal_bulletin_html():
-    return """
-    <h1 class="gpa-mt-xl">Boletín número 456</h1>
-    <div id="bopa-boletin">
-      <h4>Única Sección</h4>
-      <h5>Único Capítulo</h5>
-      <h6>Único Tema</h6>
-      <dl>
-        <dt>Disposición [2024-00001]</dt>
-      </dl>
-    </div>
-    """

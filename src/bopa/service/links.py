@@ -1,4 +1,6 @@
-from bopa.constants import BOPA_URL, DISPOSITONS_URL
+from datetime import datetime
+
+from bopa.constants import BOPA_URL, DATE_MIN, DISPOSITONS_URL
 
 
 def build_link_html(date, code):
@@ -46,3 +48,18 @@ def build_origin(*parts):
         Origin string with parts joined by " / ".
     """
     return " / ".join(part for part in parts if part)
+
+def build_date_min_error(date_obj: datetime) -> str:
+    msg = f"date must be on or after {DATE_MIN} to get structured information."
+
+    if date_obj.weekday() != 6:
+        msg += f" Information can be found here: {build_ancient_url(date_obj)}"
+
+    return msg
+
+def build_ancient_url(date_obj: datetime) -> str:
+    return (
+        f"{BOPA_URL}/"
+        f"{date_obj.year}/{date_obj.month:02d}/{date_obj.day:02d}/"
+        f"{date_obj.year}{date_obj.month:02d}{date_obj.day:02d}.pdf"
+    )
