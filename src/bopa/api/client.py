@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from bopa.constants import DATE_MIN
+from bopa.service.links import build_ancient_url, build_date_min_error
 
 from ..models import BulletinArticle, BulletinSummary
 from ..service.article import Article
@@ -31,7 +32,8 @@ class Client:
             raise ValueError("The 'date' parameter is required.")
         
         if datetime.strptime(date, "%d/%m/%Y") < DATE_MIN:
-            raise ValueError(f"date must be on or after {DATE_MIN}.")
+            date_obj = datetime.strptime(date, "%d/%m/%Y")
+            raise ValueError(build_date_min_error(date_obj))
 
         return Bulletin(date=date).get_bulletin(
             text_contains=text_contains, origin_contains=origin_contains
@@ -101,8 +103,9 @@ class Client:
             raise ValueError("Both 'cod' and 'date' must be provided.")
         
         if datetime.strptime(date, "%d/%m/%Y") < DATE_MIN:
-            raise ValueError(f"date must be on or after {DATE_MIN}.")
-
+            date_obj = datetime.strptime(date, "%d/%m/%Y")
+            raise ValueError(build_date_min_error(date_obj))
+        
         return Article(cod=cod, date=date).get_article()
 
     def get_articles(
@@ -121,8 +124,7 @@ class Client:
             date_from: Start date in dd/mm/YYYY format.
             date_to: End date in dd/mm/YYYY format.
             text_contains: Optional string to filter bulletin entries by.
-            origin_contains: Optional string to filter bulletin entries
-                by origin.
+            origin_contains: Optional string to filter bulletin entries by origin.
 
         Returns:
             List of BulletinArticle objects in the range.
@@ -152,6 +154,7 @@ class Client:
                 )
             except Exception:
                 pass
+
             current_date += timedelta(days=1)
 
         return articles

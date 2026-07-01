@@ -56,7 +56,10 @@ def main() -> int:
         grouped_by_date.setdefault(d.date, []).append(d)
     for date, ds in grouped_by_date.items():
         print(f"  {date}: {len(ds)} artículo(s)")
-    
+
+    print(f"\n=== get_bulletin(date='02/07/1945') ===")
+    bulletins = client.get_bulletin("02/07/1945")
+    print(f"  bulletins: {len(bulletins)}")
 
 if __name__ == "__main__":
     raise SystemExit(main())
