@@ -12,6 +12,7 @@ license-files = ["LICENSE"]
 authors = [
   {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
   {name = "Noelia Rico", email = "noeliarico@uniovi.es"}
+  {name = "Irene Díaz", email = "sirene@uniovi.es"}
 ]
 maintainers = [
   {name = "Diego González Suárez", email = "gonzalezsdiego@uniovi.es"},
