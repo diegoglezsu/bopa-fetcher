@@ -24,7 +24,7 @@
 - Avoid manual scraping by handling HTML parsing and URL construction internally.
 
 > [!WARNING]
-> BOPA bulletins are available in the portal from **01/01/2000** onwards. Requests for earlier dates will return no data.
+> BOPA bulletins are available in the portal in format HTML from **01/01/2000** onwards. Requests for earlier dates are in pdf format and will return no data.
 
 ## Main features
 
@@ -73,8 +73,8 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 For any questions or suggestions, feel free to reach out to the corresponding author:
 
-- **Author**: Diego González Suárez, Noelia Rico Pachón
-- **Email**: <gonzalezsdiego@uniovi.es>, <noeliarico@uniovi.es>
+- **Author**: Diego González Suárez, Noelia Rico, Irene Díaz
+- **Email**: <gonzalezsdiego@uniovi.es>, <noeliarico@uniovi.es>, <sirene@uniovi.es>
 
 ## Acknowledgements
 

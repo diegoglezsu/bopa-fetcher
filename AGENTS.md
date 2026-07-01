@@ -26,26 +26,28 @@ service/bulletin.py → Bulletin class: fetches + parses summary HTML
 service/article.py  → Article class: fetches + parses detail HTML
 service/links.py    → URL builder helpers
 models/             → dataclasses: BulletinSummary, BulletinSummaryEntry, BulletinArticle
+constants.py        → BOPA URLs, HTML element IDs, DATE_MIN
 ```
 
 - **Fully synchronous** — `requests.get(timeout=60)` + `BeautifulSoup` (html.parser)
-- **Date format**: `dd/mm/YYYY` everywhere (strings in, `datetime` objects stored)
+- **Date format**: `dd/mm/YYYY` strings in, `datetime` objects stored; `to_dict()` serializes back to `dd/mm/YYYY`
 - **Weekend validation**: `Bulletin.__init__` raises `ValueError` for Sat/Sun
-- **Silent skip**: `Client.get_bulletins()` / `Client.get_articles()` catch all exceptions per day
+- **Silent skip**: `Client.get_bulletins()` / `Client.get_articles()` wrap each day in `except Exception: pass`
 - **No custom exceptions**, no async, no DB
+- **Minimum date**: `01/01/2000` (constant `DATE_MIN`); earlier dates raise `ValueError` or silently skip
 
 ## Testing
 
-- **Mock HTTP**: use `monkeypatch.setattr(requests, "get", lambda url, timeout=60: FakeResponse(html))` — see `tests/conftest.py:FakeResponse`
-- **Client tests**: mock `BulletinService` / `ArticleService` classes, not `requests`
-- **All tests synchronous** — no fixtures, no `pytest-asyncio`
+- **Mock HTTP**: `monkeypatch.setattr(requests, "get", lambda url, timeout=60: FakeResponse(html))` — `FakeResponse` in `tests/conftest.py`
+- **Client tests**: mock `BulletinService` / `ArticleService` classes directly (not `requests`)
+- **Fixtures**: standard pytest fixtures in `conftest.py` (`sample_date`, `sample_bulletin_html`, `sample_article_html`, etc.)
+- **All tests synchronous** — no `pytest-asyncio`
 
 ## Quirks
 
 - `Article.__init__(date=None)` defaults to `datetime.now()` (was a bug, now fixed)
 - `BulletinSummary.codes` property filters out entries with `code == "N/A"`
 - `build_origin()` joins non-empty args with `" / "`, skips `None`/empty
-- `to_dict()` serializes `date` as `dd/mm/YYYY` string
 
 ## CI
 
