@@ -32,3 +32,5 @@ focused on the BOPA (Boletín Oficial del Principado de Asturias).
 - **Archive building**: Build reproducible datasets of Asturian official publications for academic research.
 
 ## Citation
+
+If you use `bopa-fetcher` in your research, please cite it. Citation information is available in the [`CITATION.cff`](https://github.com/diegoglezsu/bopa-fetcher/blob/main/CITATION.cff) file.
